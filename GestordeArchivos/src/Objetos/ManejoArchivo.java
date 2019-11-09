@@ -19,14 +19,12 @@ public class ManejoArchivo implements Serializable{
     private static final long SerialVersioUID = 608L;
     RandomAccessFile flujo=null;
     File archivo=null;
+    int numeroRegistros;
+    int tamañoRegistros;
 
     public ManejoArchivo(File archivo) throws IOException{
         this.archivo=archivo;
-        if(this.archivo.exists()&&!this.archivo.isFile()){
-            JOptionPane.showConfirmDialog(null, null, archivo.getName()+" no es un Archivo!", 0);
-        }else{
-            flujo=new RandomAccessFile(this.archivo, "rw");
-        }
+        flujo=new RandomAccessFile(this.archivo, "rw");
         
     } 
     

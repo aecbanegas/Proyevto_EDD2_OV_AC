@@ -10,6 +10,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -52,7 +55,6 @@ public class Principal extends javax.swing.JFrame {
         jm_guardar = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
 
-        jd_Campos.setPreferredSize(new java.awt.Dimension(700, 700));
         jd_Campos.setSize(new java.awt.Dimension(700, 700));
 
         jLabel1.setText("Campos");
@@ -74,7 +76,6 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap(628, Short.MAX_VALUE))
         );
 
-        jd_Registro.setPreferredSize(new java.awt.Dimension(700, 700));
         jd_Registro.setSize(new java.awt.Dimension(700, 700));
 
         jLabel2.setText("Registro");
@@ -96,7 +97,6 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap(628, Short.MAX_VALUE))
         );
 
-        jd_Estandarizacion.setPreferredSize(new java.awt.Dimension(700, 700));
         jd_Estandarizacion.setSize(new java.awt.Dimension(700, 700));
 
         jLabel3.setText("Estandarizacion");
@@ -229,7 +229,18 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-
+        String path=JOptionPane.showInputDialog("Ingrese el nombre del archivo: \n***Asegurese de que no existe un archivo con el mismo nombre***");
+        archivo=new File("./"+path+".txt");  
+        while(archivo.exists()){
+            path=JOptionPane.showInputDialog("Ingrese el nombre del archivo: \n***Asegurese de que no existe un archivo con el mismo nombre***");
+            archivo=new File("./"+path+".txt");  
+        }
+        try {
+            archivo.createNewFile();
+            System.out.println("Se creo un archivo.");
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
         //despues de crear un archivo enable para guardarlo y enable para archivo
         jm_archivo.setEnabled(true);
         jm_guardar.setEnabled(true);
