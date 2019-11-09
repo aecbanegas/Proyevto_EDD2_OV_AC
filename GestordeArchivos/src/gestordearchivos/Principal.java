@@ -5,7 +5,14 @@
  */
 package gestordearchivos;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -122,15 +129,49 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu3MouseClicked
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        JFileChooser jf = new JFileChooser();
+
+        try {
+            //FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos de Texto", "txt");
+            //FileNameExtensionFilter filtro2 = new FileNameExtensionFilter("Imagenes", "jpg", "png", "bmp");
+            //jf.setFileFilter(filtro);
+            //jf.addChoosableFileFilter(filtro2);
+            int selec = jf.showOpenDialog(this);
+
+            if (selec == JFileChooser.APPROVE_OPTION) {
+
+            }
+
+        } catch (Exception e) {
+        }
+
+        JOptionPane.showMessageDialog(this, "Archivo Cargaddo Exitosamente");
 
         // despues de que cargue el archivo valido
         jm_archivo.setEnabled(true);
-        jm_registro.setEnabled(false);
-        jm_estandarizacion.setEnabled(false);
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        JFileChooser jf = new JFileChooser();
+        //FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos de Texto", "txt");
+        //jf.addChoosableFileFilter(filtro);
 
+        int selec = jf.showSaveDialog(this);
+
+        if (selec == JFileChooser.APPROVE_OPTION) {
+            try {
+                File fichero = null;
+
+                /*if (jf.getFileFilter().getDescription().equals("Archivos de Texto")) {
+                    fichero = new File(jf.getSelectedFile().getPath() + ".txt");
+                } else {
+                    fichero = jf.getSelectedFile();
+                }*/
+
+                JOptionPane.showMessageDialog(this, "Archivo Guardado Exitosamente");
+            } catch (Exception e) {
+            }
+        }
         //despues de crear un archivo enable para guardarlo y enable para archivo
         jm_archivo.setEnabled(true);
         jm_guardar.setEnabled(true);
