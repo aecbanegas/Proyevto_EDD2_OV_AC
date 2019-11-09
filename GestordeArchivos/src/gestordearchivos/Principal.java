@@ -41,10 +41,20 @@ public class Principal extends javax.swing.JFrame {
 
         jd_Campos = new javax.swing.JDialog();
         jLabel1 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         jd_Registro = new javax.swing.JDialog();
         jLabel2 = new javax.swing.JLabel();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
         jd_Estandarizacion = new javax.swing.JDialog();
         jLabel3 = new javax.swing.JLabel();
+        jButton11 = new javax.swing.JButton();
+        jButton12 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -59,55 +69,129 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel1.setText("Campos");
 
+        jButton3.setText("Crear");
+
+        jButton4.setText("Listar");
+
+        jButton5.setText("Modificar");
+
         javax.swing.GroupLayout jd_CamposLayout = new javax.swing.GroupLayout(jd_Campos.getContentPane());
         jd_Campos.getContentPane().setLayout(jd_CamposLayout);
         jd_CamposLayout.setHorizontalGroup(
             jd_CamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jd_CamposLayout.createSequentialGroup()
-                .addGap(296, 296, 296)
-                .addComponent(jLabel1)
-                .addContainerGap(358, Short.MAX_VALUE))
+                .addGroup(jd_CamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jd_CamposLayout.createSequentialGroup()
+                        .addGap(296, 296, 296)
+                        .addComponent(jLabel1))
+                    .addGroup(jd_CamposLayout.createSequentialGroup()
+                        .addGap(110, 110, 110)
+                        .addComponent(jButton3)
+                        .addGap(142, 142, 142)
+                        .addComponent(jButton4))
+                    .addGroup(jd_CamposLayout.createSequentialGroup()
+                        .addGap(257, 257, 257)
+                        .addComponent(jButton5)))
+                .addContainerGap(320, Short.MAX_VALUE))
         );
         jd_CamposLayout.setVerticalGroup(
             jd_CamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jd_CamposLayout.createSequentialGroup()
                 .addGap(56, 56, 56)
                 .addComponent(jLabel1)
-                .addContainerGap(628, Short.MAX_VALUE))
+                .addGap(108, 108, 108)
+                .addGroup(jd_CamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4))
+                .addGap(133, 133, 133)
+                .addComponent(jButton5)
+                .addContainerGap(337, Short.MAX_VALUE))
         );
 
         jd_Registro.setSize(new java.awt.Dimension(700, 700));
 
         jLabel2.setText("Registro");
 
+        jButton6.setText("Buscar");
+
+        jButton7.setText("Agregar");
+
+        jButton8.setText("Modificar");
+
+        jButton9.setText("Listar");
+
+        jButton10.setText("Borrar");
+
         javax.swing.GroupLayout jd_RegistroLayout = new javax.swing.GroupLayout(jd_Registro.getContentPane());
         jd_Registro.getContentPane().setLayout(jd_RegistroLayout);
         jd_RegistroLayout.setHorizontalGroup(
             jd_RegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jd_RegistroLayout.createSequentialGroup()
-                .addGap(296, 296, 296)
-                .addComponent(jLabel2)
-                .addContainerGap(357, Short.MAX_VALUE))
+                .addGroup(jd_RegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jd_RegistroLayout.createSequentialGroup()
+                        .addGap(296, 296, 296)
+                        .addComponent(jLabel2))
+                    .addGroup(jd_RegistroLayout.createSequentialGroup()
+                        .addGap(102, 102, 102)
+                        .addComponent(jButton6))
+                    .addGroup(jd_RegistroLayout.createSequentialGroup()
+                        .addGap(164, 164, 164)
+                        .addComponent(jButton7)
+                        .addGap(97, 97, 97)
+                        .addComponent(jButton9)))
+                .addContainerGap(297, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_RegistroLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jd_RegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_RegistroLayout.createSequentialGroup()
+                        .addComponent(jButton8)
+                        .addGap(215, 215, 215))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_RegistroLayout.createSequentialGroup()
+                        .addComponent(jButton10)
+                        .addGap(202, 202, 202))))
         );
         jd_RegistroLayout.setVerticalGroup(
             jd_RegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jd_RegistroLayout.createSequentialGroup()
                 .addGap(56, 56, 56)
                 .addComponent(jLabel2)
-                .addContainerGap(628, Short.MAX_VALUE))
+                .addGap(93, 93, 93)
+                .addComponent(jButton6)
+                .addGroup(jd_RegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jd_RegistroLayout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addComponent(jButton7)
+                        .addGap(70, 70, 70)
+                        .addComponent(jButton8))
+                    .addGroup(jd_RegistroLayout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addComponent(jButton9)))
+                .addGap(121, 121, 121)
+                .addComponent(jButton10)
+                .addContainerGap(179, Short.MAX_VALUE))
         );
 
         jd_Estandarizacion.setSize(new java.awt.Dimension(700, 700));
 
         jLabel3.setText("Estandarizacion");
 
+        jButton11.setText("Excel");
+
+        jButton12.setText("XLM");
+
         javax.swing.GroupLayout jd_EstandarizacionLayout = new javax.swing.GroupLayout(jd_Estandarizacion.getContentPane());
         jd_Estandarizacion.getContentPane().setLayout(jd_EstandarizacionLayout);
         jd_EstandarizacionLayout.setHorizontalGroup(
             jd_EstandarizacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_EstandarizacionLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton11)
+                .addGap(239, 239, 239))
             .addGroup(jd_EstandarizacionLayout.createSequentialGroup()
                 .addGap(296, 296, 296)
-                .addComponent(jLabel3)
+                .addGroup(jd_EstandarizacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton12)
+                    .addComponent(jLabel3))
                 .addContainerGap(315, Short.MAX_VALUE))
         );
         jd_EstandarizacionLayout.setVerticalGroup(
@@ -115,7 +199,11 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(jd_EstandarizacionLayout.createSequentialGroup()
                 .addGap(56, 56, 56)
                 .addComponent(jLabel3)
-                .addContainerGap(628, Short.MAX_VALUE))
+                .addGap(196, 196, 196)
+                .addComponent(jButton11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
+                .addComponent(jButton12)
+                .addGap(258, 258, 258))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -316,7 +404,17 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
