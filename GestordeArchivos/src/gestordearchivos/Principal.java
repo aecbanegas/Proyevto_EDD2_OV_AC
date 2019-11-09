@@ -40,17 +40,20 @@ public class Principal extends javax.swing.JFrame {
     private void initComponents() {
 
         jd_Campos = new javax.swing.JDialog();
-        jLabel1 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
         jd_Registro = new javax.swing.JDialog();
-        jLabel2 = new javax.swing.JLabel();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
+        jTabbedPane2 = new javax.swing.JTabbedPane();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
+        jPanel8 = new javax.swing.JPanel();
         jd_Estandarizacion = new javax.swing.JDialog();
         jLabel3 = new javax.swing.JLabel();
         jButton11 = new javax.swing.JButton();
@@ -67,108 +70,156 @@ public class Principal extends javax.swing.JFrame {
 
         jd_Campos.setSize(new java.awt.Dimension(700, 700));
 
-        jLabel1.setText("Campos");
+        jLabel6.setText("Campos");
 
-        jButton3.setText("Crear");
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(311, 311, 311)
+                .addComponent(jLabel6)
+                .addContainerGap(338, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel6)
+                .addContainerGap(629, Short.MAX_VALUE))
+        );
 
-        jButton4.setText("Listar");
+        jTabbedPane1.addTab("Crear", jPanel1);
 
-        jButton5.setText("Modificar");
+        jLabel5.setText("Campos");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(311, 311, 311)
+                .addComponent(jLabel5)
+                .addContainerGap(338, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel5)
+                .addContainerGap(629, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Listar", jPanel2);
+
+        jLabel4.setText("Campos");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(311, 311, 311)
+                .addComponent(jLabel4)
+                .addContainerGap(338, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel4)
+                .addContainerGap(629, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Modificar", jPanel3);
 
         javax.swing.GroupLayout jd_CamposLayout = new javax.swing.GroupLayout(jd_Campos.getContentPane());
         jd_Campos.getContentPane().setLayout(jd_CamposLayout);
         jd_CamposLayout.setHorizontalGroup(
             jd_CamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jd_CamposLayout.createSequentialGroup()
-                .addGroup(jd_CamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jd_CamposLayout.createSequentialGroup()
-                        .addGap(296, 296, 296)
-                        .addComponent(jLabel1))
-                    .addGroup(jd_CamposLayout.createSequentialGroup()
-                        .addGap(110, 110, 110)
-                        .addComponent(jButton3)
-                        .addGap(142, 142, 142)
-                        .addComponent(jButton4))
-                    .addGroup(jd_CamposLayout.createSequentialGroup()
-                        .addGap(257, 257, 257)
-                        .addComponent(jButton5)))
-                .addContainerGap(320, Short.MAX_VALUE))
+            .addComponent(jTabbedPane1)
         );
         jd_CamposLayout.setVerticalGroup(
             jd_CamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jd_CamposLayout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addComponent(jLabel1)
-                .addGap(108, 108, 108)
-                .addGroup(jd_CamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
-                .addGap(133, 133, 133)
-                .addComponent(jButton5)
-                .addContainerGap(337, Short.MAX_VALUE))
+            .addComponent(jTabbedPane1)
         );
 
         jd_Registro.setSize(new java.awt.Dimension(700, 700));
 
-        jLabel2.setText("Registro");
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 695, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 670, Short.MAX_VALUE)
+        );
 
-        jButton6.setText("Buscar");
+        jTabbedPane2.addTab("Agregar", jPanel4);
 
-        jButton7.setText("Agregar");
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 695, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 670, Short.MAX_VALUE)
+        );
 
-        jButton8.setText("Modificar");
+        jTabbedPane2.addTab("Listar", jPanel5);
 
-        jButton9.setText("Listar");
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 695, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 670, Short.MAX_VALUE)
+        );
 
-        jButton10.setText("Borrar");
+        jTabbedPane2.addTab("Buscar", jPanel6);
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 695, Short.MAX_VALUE)
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 670, Short.MAX_VALUE)
+        );
+
+        jTabbedPane2.addTab("Modificar", jPanel7);
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 695, Short.MAX_VALUE)
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 670, Short.MAX_VALUE)
+        );
+
+        jTabbedPane2.addTab("Borrar", jPanel8);
 
         javax.swing.GroupLayout jd_RegistroLayout = new javax.swing.GroupLayout(jd_Registro.getContentPane());
         jd_Registro.getContentPane().setLayout(jd_RegistroLayout);
         jd_RegistroLayout.setHorizontalGroup(
             jd_RegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jd_RegistroLayout.createSequentialGroup()
-                .addGroup(jd_RegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jd_RegistroLayout.createSequentialGroup()
-                        .addGap(296, 296, 296)
-                        .addComponent(jLabel2))
-                    .addGroup(jd_RegistroLayout.createSequentialGroup()
-                        .addGap(102, 102, 102)
-                        .addComponent(jButton6))
-                    .addGroup(jd_RegistroLayout.createSequentialGroup()
-                        .addGap(164, 164, 164)
-                        .addComponent(jButton7)
-                        .addGap(97, 97, 97)
-                        .addComponent(jButton9)))
-                .addContainerGap(297, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_RegistroLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jd_RegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_RegistroLayout.createSequentialGroup()
-                        .addComponent(jButton8)
-                        .addGap(215, 215, 215))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_RegistroLayout.createSequentialGroup()
-                        .addComponent(jButton10)
-                        .addGap(202, 202, 202))))
+            .addComponent(jTabbedPane2)
         );
         jd_RegistroLayout.setVerticalGroup(
             jd_RegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jd_RegistroLayout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addComponent(jLabel2)
-                .addGap(93, 93, 93)
-                .addComponent(jButton6)
-                .addGroup(jd_RegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jd_RegistroLayout.createSequentialGroup()
-                        .addGap(65, 65, 65)
-                        .addComponent(jButton7)
-                        .addGap(70, 70, 70)
-                        .addComponent(jButton8))
-                    .addGroup(jd_RegistroLayout.createSequentialGroup()
-                        .addGap(53, 53, 53)
-                        .addComponent(jButton9)))
-                .addGap(121, 121, 121)
-                .addComponent(jButton10)
-                .addContainerGap(179, Short.MAX_VALUE))
+            .addComponent(jTabbedPane2)
         );
 
         jd_Estandarizacion.setSize(new java.awt.Dimension(700, 700));
@@ -404,22 +455,25 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JDialog jd_Campos;
     private javax.swing.JDialog jd_Estandarizacion;
     private javax.swing.JDialog jd_Registro;
