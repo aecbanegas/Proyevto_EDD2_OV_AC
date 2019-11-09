@@ -5,6 +5,8 @@
  */
 package gestordearchivos;
 
+import java.io.File;
+
 /**
  *
  * @author MBanegas
@@ -30,22 +32,54 @@ public class Principal extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        jm_archivo = new javax.swing.JMenu();
+        jm_campos = new javax.swing.JMenuItem();
+        jm_registro = new javax.swing.JMenuItem();
+        jm_estandarizacion = new javax.swing.JMenuItem();
+        jm_guardar = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
 
         jButton1.setText("Cargar Archivos");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
         jButton2.setText("Nuevo Archivo");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
 
-        jMenu1.setText("Archivo");
-        jMenuBar1.add(jMenu1);
+        jm_archivo.setText("Archivo");
+        jm_archivo.setEnabled(false);
+        jm_archivo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jm_archivoMouseClicked(evt);
+            }
+        });
 
-        jMenu2.setText("Guardar Archivo");
-        jMenuBar1.add(jMenu2);
+        jm_campos.setText("Campos");
+        jm_archivo.add(jm_campos);
+
+        jm_registro.setText("Registros");
+        jm_registro.setEnabled(false);
+        jm_archivo.add(jm_registro);
+
+        jm_estandarizacion.setText("Estandarizacion");
+        jm_estandarizacion.setEnabled(false);
+        jm_archivo.add(jm_estandarizacion);
+
+        jMenuBar1.add(jm_archivo);
+
+        jm_guardar.setText("Guardar Archivo");
+        jm_guardar.setEnabled(false);
+        jMenuBar1.add(jm_guardar);
 
         jMenu3.setText("Exit");
         jMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -87,6 +121,28 @@ public class Principal extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jMenu3MouseClicked
 
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+
+        // despues de que cargue el archivo valido
+        jm_archivo.setEnabled(true);
+        jm_registro.setEnabled(false);
+        jm_estandarizacion.setEnabled(false);
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+
+        //despues de crear un archivo enable para guardarlo y enable para archivo
+        jm_archivo.setEnabled(true);
+        jm_guardar.setEnabled(true);
+    }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jm_archivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jm_archivoMouseClicked
+
+        //luego de crear un campo enable agregar a registro y estandarizacion
+        jm_registro.setEnabled(true);
+        jm_estandarizacion.setEnabled(true);
+    }//GEN-LAST:event_jm_archivoMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -125,9 +181,13 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jm_archivo;
+    private javax.swing.JMenuItem jm_campos;
+    private javax.swing.JMenuItem jm_estandarizacion;
+    private javax.swing.JMenu jm_guardar;
+    private javax.swing.JMenuItem jm_registro;
     // End of variables declaration//GEN-END:variables
+    private File archivo = null;
 }

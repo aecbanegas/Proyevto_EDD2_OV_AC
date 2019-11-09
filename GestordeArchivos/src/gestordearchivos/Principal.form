@@ -4,14 +4,38 @@
   <NonVisualComponents>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <SubComponents>
-        <Menu class="javax.swing.JMenu" name="jMenu1">
+        <Menu class="javax.swing.JMenu" name="jm_archivo">
           <Properties>
             <Property name="text" type="java.lang.String" value="Archivo"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jm_archivoMouseClicked"/>
+          </Events>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jm_campos">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Campos"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jm_registro">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Registros"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jm_estandarizacion">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Estandarizacion"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu2">
+        <Menu class="javax.swing.JMenu" name="jm_guardar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Guardar Archivo"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu3">
@@ -76,11 +100,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Cargar Archivos"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton1MouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButton2">
       <Properties>
         <Property name="text" type="java.lang.String" value="Nuevo Archivo"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton2MouseClicked"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
