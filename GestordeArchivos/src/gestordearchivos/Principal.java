@@ -36,6 +36,12 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jd_Campos = new javax.swing.JDialog();
+        jLabel1 = new javax.swing.JLabel();
+        jd_Registro = new javax.swing.JDialog();
+        jLabel2 = new javax.swing.JLabel();
+        jd_Estandarizacion = new javax.swing.JDialog();
+        jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -45,6 +51,72 @@ public class Principal extends javax.swing.JFrame {
         jm_estandarizacion = new javax.swing.JMenuItem();
         jm_guardar = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
+
+        jd_Campos.setPreferredSize(new java.awt.Dimension(700, 700));
+        jd_Campos.setSize(new java.awt.Dimension(700, 700));
+
+        jLabel1.setText("Campos");
+
+        javax.swing.GroupLayout jd_CamposLayout = new javax.swing.GroupLayout(jd_Campos.getContentPane());
+        jd_Campos.getContentPane().setLayout(jd_CamposLayout);
+        jd_CamposLayout.setHorizontalGroup(
+            jd_CamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_CamposLayout.createSequentialGroup()
+                .addGap(296, 296, 296)
+                .addComponent(jLabel1)
+                .addContainerGap(358, Short.MAX_VALUE))
+        );
+        jd_CamposLayout.setVerticalGroup(
+            jd_CamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_CamposLayout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addComponent(jLabel1)
+                .addContainerGap(628, Short.MAX_VALUE))
+        );
+
+        jd_Registro.setPreferredSize(new java.awt.Dimension(700, 700));
+        jd_Registro.setSize(new java.awt.Dimension(700, 700));
+
+        jLabel2.setText("Registro");
+
+        javax.swing.GroupLayout jd_RegistroLayout = new javax.swing.GroupLayout(jd_Registro.getContentPane());
+        jd_Registro.getContentPane().setLayout(jd_RegistroLayout);
+        jd_RegistroLayout.setHorizontalGroup(
+            jd_RegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_RegistroLayout.createSequentialGroup()
+                .addGap(296, 296, 296)
+                .addComponent(jLabel2)
+                .addContainerGap(357, Short.MAX_VALUE))
+        );
+        jd_RegistroLayout.setVerticalGroup(
+            jd_RegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_RegistroLayout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addComponent(jLabel2)
+                .addContainerGap(628, Short.MAX_VALUE))
+        );
+
+        jd_Estandarizacion.setPreferredSize(new java.awt.Dimension(700, 700));
+        jd_Estandarizacion.setSize(new java.awt.Dimension(700, 700));
+
+        jLabel3.setText("Estandarizacion");
+
+        javax.swing.GroupLayout jd_EstandarizacionLayout = new javax.swing.GroupLayout(jd_Estandarizacion.getContentPane());
+        jd_Estandarizacion.getContentPane().setLayout(jd_EstandarizacionLayout);
+        jd_EstandarizacionLayout.setHorizontalGroup(
+            jd_EstandarizacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_EstandarizacionLayout.createSequentialGroup()
+                .addGap(296, 296, 296)
+                .addComponent(jLabel3)
+                .addContainerGap(315, Short.MAX_VALUE))
+        );
+        jd_EstandarizacionLayout.setVerticalGroup(
+            jd_EstandarizacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_EstandarizacionLayout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addComponent(jLabel3)
+                .addContainerGap(628, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
@@ -86,6 +158,11 @@ public class Principal extends javax.swing.JFrame {
 
         jm_guardar.setText("Guardar Archivo");
         jm_guardar.setEnabled(false);
+        jm_guardar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jm_guardarMouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jm_guardar);
 
         jMenu3.setText("Exit");
@@ -152,6 +229,22 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+
+        //despues de crear un archivo enable para guardarlo y enable para archivo
+        jm_archivo.setEnabled(true);
+        jm_guardar.setEnabled(true);
+    }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jm_archivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jm_archivoMouseClicked
+
+        //luego de crear un campo enable agregar a registro y estandarizacion
+        jm_registro.setEnabled(true);
+        jm_estandarizacion.setEnabled(true);
+    }//GEN-LAST:event_jm_archivoMouseClicked
+
+    private void jm_guardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jm_guardarMouseClicked
+        // TODO add your handling code here:
+
         JFileChooser jf = new JFileChooser();
         //FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos de Texto", "txt");
         //jf.addChoosableFileFilter(filtro);
@@ -167,22 +260,13 @@ public class Principal extends javax.swing.JFrame {
                 } else {
                     fichero = jf.getSelectedFile();
                 }*/
-
                 JOptionPane.showMessageDialog(this, "Archivo Guardado Exitosamente");
             } catch (Exception e) {
             }
         }
-        //despues de crear un archivo enable para guardarlo y enable para archivo
+
         jm_archivo.setEnabled(true);
-        jm_guardar.setEnabled(true);
-    }//GEN-LAST:event_jButton2MouseClicked
-
-    private void jm_archivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jm_archivoMouseClicked
-
-        //luego de crear un campo enable agregar a registro y estandarizacion
-        jm_registro.setEnabled(true);
-        jm_estandarizacion.setEnabled(true);
-    }//GEN-LAST:event_jm_archivoMouseClicked
+    }//GEN-LAST:event_jm_guardarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -222,8 +306,14 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JDialog jd_Campos;
+    private javax.swing.JDialog jd_Estandarizacion;
+    private javax.swing.JDialog jd_Registro;
     private javax.swing.JMenu jm_archivo;
     private javax.swing.JMenuItem jm_campos;
     private javax.swing.JMenuItem jm_estandarizacion;
