@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -89,9 +90,24 @@ public class Principal extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nombre", "Tipo", "Tamaño"
+                "Nombre", "Tipo", "Tamaño", "Llave Unica"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jb_agregarcampo.setText("Agregar Campo");
@@ -102,12 +118,32 @@ public class Principal extends javax.swing.JFrame {
         });
 
         jb_modificarcampo.setText("Modificar Campos");
+        jb_modificarcampo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_modificarcampoMouseClicked(evt);
+            }
+        });
 
         jb_listarcampo.setText("Listar Campos");
+        jb_listarcampo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_listarcampoMouseClicked(evt);
+            }
+        });
 
         jb_borrarcampo.setText("Borrar Campos");
+        jb_borrarcampo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_borrarcampoMouseClicked(evt);
+            }
+        });
 
         jb_regresarcampos.setText("Regresar");
+        jb_regresarcampos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_regresarcamposMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jd_CamposLayout = new javax.swing.GroupLayout(jd_Campos.getContentPane());
         jd_Campos.getContentPane().setLayout(jd_CamposLayout);
@@ -302,6 +338,11 @@ public class Principal extends javax.swing.JFrame {
                 jm_camposMouseClicked(evt);
             }
         });
+        jm_campos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jm_camposActionPerformed(evt);
+            }
+        });
         jm_archivo.add(jm_campos);
 
         jm_registro.setText("Registros");
@@ -319,6 +360,11 @@ public class Principal extends javax.swing.JFrame {
         jm_guardar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jm_guardarMouseClicked(evt);
+            }
+        });
+        jm_guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jm_guardarActionPerformed(evt);
             }
         });
         jMenuBar1.add(jm_guardar);
@@ -425,10 +471,23 @@ public class Principal extends javax.swing.JFrame {
 
     private void jm_guardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jm_guardarMouseClicked
         try {
-            // TODO add your handling code here:
+            System.out.println("Hollalalalalal");
+            for (int i = 0; i < campos.size(); i++) {
+                flujo.writeUTF(campos.get(i));
+                flujo.writeUTF(tiposcampos.get(i));
+                flujo.writeInt(sizecampos.get(i));
+                flujo.writeBoolean(llaveunica.get(i));
+            }
+            System.out.println(flujo.length());
+            
             flujo.close();
         } catch (IOException ex) {
+            System.out.println(ex.getMessage());
         }
+        campos.clear();
+        sizecampos.clear();
+        llaveunica.clear();
+        tiposcampos.clear();
         jm_archivo.setEnabled(false);
         jm_guardar.setEnabled(false);
         jb_nuevoarchivo.setEnabled(true);
@@ -444,7 +503,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void jb_agregarcampoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_agregarcampoMouseClicked
         // TODO add your handling code here:
-        while(campos.size()<8){
+        if(campos.size()<8){
             String campo;
             do {            
                 campo=JOptionPane.showInputDialog("Ingrese el nombre del campo:\n*Menor o igual a 12 caracteres*");
@@ -476,12 +535,164 @@ public class Principal extends javax.swing.JFrame {
                     size=-1;
                 }
             }
+            int confirmacion = JOptionPane.showConfirmDialog (null, "El campo es una llave?",null,JOptionPane.YES_NO_OPTION);
+            if(confirmacion == JOptionPane.YES_OPTION) {
+                llaveunica.add(true);
+            }else if(confirmacion == JOptionPane.NO_OPTION){
+                llaveunica.add(false);
+                System.out.println("Entra");
+            }
             campos.add(campo);
             tiposcampos.add(tipo);
             sizecampos.add(size);
             JOptionPane.showMessageDialog(this, "Se ha agregado el campo exitosamente.");
         }
     }//GEN-LAST:event_jb_agregarcampoMouseClicked
+
+    private void jb_modificarcampoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_modificarcampoMouseClicked
+        // TODO add your handling code here:
+        if (campos.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay campos creados.");
+        }else{
+            String menu="";
+            for (int i = 0; i < campos.size(); i++) {
+                menu+="Posicion:"+i+" "+campos.get(i)+"\n";
+            }
+            int opc=-1;
+            while(opc<0||opc>campos.size()){
+                try {
+                    opc=Integer.parseInt(JOptionPane.showInputDialog("Menu\n"+menu+"Ingrese la posicion de campo a modificar:"));
+                } catch (Exception e) {
+                    opc=-1;
+                }
+            }
+            String campo;
+            do {            
+                campo=JOptionPane.showInputDialog("Ingrese el nombre del campo:\n*Menor o igual a 12 caracteres*");
+            } while (campo==null||campo.equals("")||campo.length()>12);
+            String[] tipos={"int","String","double","boolean"};
+            int respuesta = JOptionPane.showOptionDialog(null, "Presione el boton del tipo de dato a usar en el campo:",
+                    "Seleccione un tipo",JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, tipos, tipos[0]);
+            String tipo="";
+            switch(respuesta){
+                case 0:
+                    tipo="int";
+                    break;
+                case 1:
+                    tipo="String";
+                    break;
+                case 2:
+                    tipo="double";
+                    break;
+                case 3:
+                    tipo="boolean";
+                default:
+                    break;
+            }
+            int size=-1;
+            while(size<1||size>15){
+                try {
+                    size=Integer.parseInt(JOptionPane.showInputDialog("Ingrese el tamaño del campo entre 1-15:"));
+                } catch (Exception e) {
+                    size=-1;
+                }
+            }
+            int confirmacion = JOptionPane.showConfirmDialog (null, "El campo es una llave?",null,JOptionPane.YES_NO_OPTION);
+            if(confirmacion == JOptionPane.YES_OPTION) {
+                llaveunica.remove(opc);
+                llaveunica.add(opc, true);
+            }else if(confirmacion == JOptionPane.NO_OPTION){
+                llaveunica.remove(opc);
+                llaveunica.add(opc, false);
+                System.out.println("Entra Modificar");
+            }
+            campos.remove(opc);
+            campos.add(opc,campo);
+            tiposcampos.remove(opc);
+            tiposcampos.add(opc,tipo);
+            sizecampos.remove(opc);
+            sizecampos.add(opc,size);
+            JOptionPane.showMessageDialog(this, "Se ha modificado el campo exitosamente.");
+        }
+    }//GEN-LAST:event_jb_modificarcampoMouseClicked
+
+    private void jb_listarcampoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_listarcampoMouseClicked
+        // TODO add your handling code here:
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nombre", "Tipo", "Tamaño", "Llave Unica"
+            }
+        ));
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        for (int i = 0; i < campos.size(); i++) {
+            Object[] row = {campos.get(i),tiposcampos.get(i),sizecampos.get(i),llaveunica.get(i)};
+            modelo.addRow(row);
+        }
+        jTable1.setModel(modelo);
+        JOptionPane.showMessageDialog(this, "Se ha completado la lista de campos.");
+    }//GEN-LAST:event_jb_listarcampoMouseClicked
+
+    private void jb_borrarcampoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_borrarcampoMouseClicked
+        // TODO add your handling code here:
+        if (campos.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay campos creados.");
+        }else{
+            String menu="";
+            for (int i = 0; i < campos.size(); i++) {
+                menu+="Posicion:"+i+" "+campos.get(i)+"\n";
+            }
+            int opc=-1;
+            while(opc<0||opc>campos.size()){
+                try {
+                    opc=Integer.parseInt(JOptionPane.showInputDialog("Menu\n"+menu+"Ingrese la posicion de campo a borrar:"));
+                } catch (Exception e) {
+                    opc=-1;
+                }
+            }
+            campos.remove(opc);
+            sizecampos.remove(opc);
+            llaveunica.remove(opc);
+            tiposcampos.remove(opc);
+            JOptionPane.showMessageDialog(this, "Se ha borrado el campo exitosamente.");
+        }
+    }//GEN-LAST:event_jb_borrarcampoMouseClicked
+
+    private void jb_regresarcamposMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_regresarcamposMouseClicked
+        // TODO add your handling code here:
+        jd_Campos.dispose();
+    }//GEN-LAST:event_jb_regresarcamposMouseClicked
+
+    private void jm_camposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_camposActionPerformed
+        // TODO add your handling code here:
+        jd_Campos.setModal(true);
+        jd_Campos.setLocationRelativeTo(this);
+        jd_Campos.pack();
+        jd_Campos.setVisible(true);
+    }//GEN-LAST:event_jm_camposActionPerformed
+
+    private void jm_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_guardarActionPerformed
+        // TODO add your handling code here:
+        try {
+            System.out.println("Hollalalalalal");
+            for (int i = 0; i < campos.size(); i++) {
+                flujo.writeUTF(campos.get(i));
+                flujo.writeUTF(tiposcampos.get(i));
+                flujo.writeInt(sizecampos.get(i));
+                flujo.writeBoolean(llaveunica.get(i));
+            }
+            System.out.println(flujo.length());
+            
+            flujo.close();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+        jm_archivo.setEnabled(false);
+        jm_guardar.setEnabled(false);
+        jb_nuevoarchivo.setEnabled(true);
+    }//GEN-LAST:event_jm_guardarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -554,7 +765,8 @@ public class Principal extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     private File archivo = null;
     private RandomAccessFile flujo=null;
-    ArrayList<String> campos;
-    ArrayList<String> tiposcampos;
-    ArrayList<Integer> sizecampos;
+    ArrayList<String> campos=new ArrayList();
+    ArrayList<String> tiposcampos=new ArrayList();
+    ArrayList<Integer> sizecampos=new ArrayList();
+    ArrayList<Boolean> llaveunica=new ArrayList();
 }
