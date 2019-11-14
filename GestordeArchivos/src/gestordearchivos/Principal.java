@@ -5,6 +5,7 @@
  */
 package gestordearchivos;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -31,6 +32,8 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
+        jm_registro.setForeground(Color.GRAY);
+        jm_estandarizacion.setForeground(Color.gray);
     }
 
     /**
@@ -157,11 +160,10 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(118, 118, 118)
                 .addGroup(jd_CamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jb_regresarcampos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jd_CamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jb_modificarcampo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jb_agregarcampo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jb_listarcampo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jb_borrarcampo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jb_modificarcampo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jb_agregarcampo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jb_listarcampo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jb_borrarcampo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jd_CamposLayout.setVerticalGroup(
@@ -333,11 +335,6 @@ public class Principal extends javax.swing.JFrame {
         });
 
         jm_campos.setText("Campos");
-        jm_campos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jm_camposMouseClicked(evt);
-            }
-        });
         jm_campos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jm_camposActionPerformed(evt);
@@ -347,6 +344,11 @@ public class Principal extends javax.swing.JFrame {
 
         jm_registro.setText("Registros");
         jm_registro.setEnabled(false);
+        jm_registro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jm_registroMouseClicked(evt);
+            }
+        });
         jm_archivo.add(jm_registro);
 
         jm_estandarizacion.setText("Estandarizacion");
@@ -390,9 +392,9 @@ public class Principal extends javax.swing.JFrame {
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(279, 279, 279)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jb_nuevoarchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jb_cargararchivo))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jb_cargararchivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jb_nuevoarchivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(179, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -432,27 +434,31 @@ public class Principal extends javax.swing.JFrame {
 
             if (selec == JFileChooser.APPROVE_OPTION) {
 
+                JOptionPane.showMessageDialog(this, "Archivo Cargado Exitosamente");
+
+                // despues de que cargue el archivo valido
+                jm_archivo.setEnabled(true);
+
+            } else {
+                JOptionPane.showMessageDialog(this, "No Cargo Ningun Archivo");
             }
 
         } catch (Exception e) {
+            System.err.println(e.getMessage());
         }
 
-        JOptionPane.showMessageDialog(this, "Archivo Cargaddo Exitosamente");
-
-        // despues de que cargue el archivo valido
-        jm_archivo.setEnabled(true);
     }//GEN-LAST:event_jb_cargararchivoMouseClicked
 
     private void jb_nuevoarchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_nuevoarchivoMouseClicked
-        String path=JOptionPane.showInputDialog("Ingrese el nombre del archivo: \n***Asegurese de que no existe un archivo con el mismo nombre***");
-        archivo=new File("./"+path+".ovac");  
-        while(archivo.exists()){
-            path=JOptionPane.showInputDialog("Ingrese el nombre del archivo: \n***Asegurese de que no existe un archivo con el mismo nombre***");
-            archivo=new File("./"+path+".ovac");  
+        String path = JOptionPane.showInputDialog("Ingrese el nombre del archivo: \n***Asegurese de que no existe un archivo con el mismo nombre***");
+        archivo = new File("./" + path + ".ovac");
+        while (archivo.exists()) {
+            path = JOptionPane.showInputDialog("Ingrese el nombre del archivo: \n***Asegurese de que no existe un archivo con el mismo nombre***");
+            archivo = new File("./" + path + ".ovac");
         }
         try {
             archivo.createNewFile();
-            flujo=new RandomAccessFile(archivo, "rw");
+            flujo = new RandomAccessFile(archivo, "rw");
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
@@ -479,7 +485,7 @@ public class Principal extends javax.swing.JFrame {
                 flujo.writeBoolean(llaveunica.get(i));
             }
             System.out.println(flujo.length());
-            
+
             flujo.close();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
@@ -493,52 +499,44 @@ public class Principal extends javax.swing.JFrame {
         jb_nuevoarchivo.setEnabled(true);
     }//GEN-LAST:event_jm_guardarMouseClicked
 
-    private void jm_camposMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jm_camposMouseClicked
-        // TODO add your handling code here:
-        jd_Campos.setModal(true);
-        jd_Campos.setLocationRelativeTo(this);
-        jd_Campos.pack();
-        jd_Campos.setVisible(true);
-    }//GEN-LAST:event_jm_camposMouseClicked
-
     private void jb_agregarcampoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_agregarcampoMouseClicked
         // TODO add your handling code here:
-        if(campos.size()<8){
+        if (campos.size() < 8) {
             String campo;
-            do {            
-                campo=JOptionPane.showInputDialog("Ingrese el nombre del campo:\n*Menor o igual a 12 caracteres*");
-            } while (campo==null||campo.equals("")||campo.length()>12);
-            String[] tipos={"int","String","double","boolean"};
+            do {
+                campo = JOptionPane.showInputDialog("Ingrese el nombre del campo:\n*Menor o igual a 12 caracteres*");
+            } while (campo == null || campo.equals("") || campo.length() > 12);
+            String[] tipos = {"int", "String", "double", "boolean"};
             int respuesta = JOptionPane.showOptionDialog(null, "Presione el boton del tipo de dato a usar en el campo:",
-                    "Seleccione un tipo",JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, tipos, tipos[0]);
-            String tipo="";
-            switch(respuesta){
+                    "Seleccione un tipo", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, tipos, tipos[0]);
+            String tipo = "";
+            switch (respuesta) {
                 case 0:
-                    tipo="int";
+                    tipo = "int";
                     break;
                 case 1:
-                    tipo="String";
+                    tipo = "String";
                     break;
                 case 2:
-                    tipo="double";
+                    tipo = "double";
                     break;
                 case 3:
-                    tipo="boolean";
+                    tipo = "boolean";
                 default:
                     break;
             }
-            int size=-1;
-            while(size<1||size>15){
+            int size = -1;
+            while (size < 1 || size > 15) {
                 try {
-                    size=Integer.parseInt(JOptionPane.showInputDialog("Ingrese el tamaño del campo entre 1-15:"));
+                    size = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el tamaño del campo entre 1-15:"));
                 } catch (Exception e) {
-                    size=-1;
+                    size = -1;
                 }
             }
-            int confirmacion = JOptionPane.showConfirmDialog (null, "El campo es una llave?",null,JOptionPane.YES_NO_OPTION);
-            if(confirmacion == JOptionPane.YES_OPTION) {
+            int confirmacion = JOptionPane.showConfirmDialog(null, "El campo es una llave?", null, JOptionPane.YES_NO_OPTION);
+            if (confirmacion == JOptionPane.YES_OPTION) {
                 llaveunica.add(true);
-            }else if(confirmacion == JOptionPane.NO_OPTION){
+            } else if (confirmacion == JOptionPane.NO_OPTION) {
                 llaveunica.add(false);
                 System.out.println("Entra");
             }
@@ -546,6 +544,13 @@ public class Principal extends javax.swing.JFrame {
             tiposcampos.add(tipo);
             sizecampos.add(size);
             JOptionPane.showMessageDialog(this, "Se ha agregado el campo exitosamente.");
+
+            jm_registro.setForeground(Color.BLACK);
+            jm_estandarizacion.setForeground(Color.BLACK);
+
+            jm_registro.setEnabled(true);
+            jm_estandarizacion.setEnabled(true);
+
         }
     }//GEN-LAST:event_jb_agregarcampoMouseClicked
 
@@ -553,65 +558,65 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (campos.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No hay campos creados.");
-        }else{
-            String menu="";
+        } else {
+            String menu = "";
             for (int i = 0; i < campos.size(); i++) {
-                menu+="Posicion:"+i+" "+campos.get(i)+"\n";
+                menu += "Posicion:" + i + " " + campos.get(i) + "\n";
             }
-            int opc=-1;
-            while(opc<0||opc>campos.size()){
+            int opc = -1;
+            while (opc < 0 || opc > campos.size()) {
                 try {
-                    opc=Integer.parseInt(JOptionPane.showInputDialog("Menu\n"+menu+"Ingrese la posicion de campo a modificar:"));
+                    opc = Integer.parseInt(JOptionPane.showInputDialog("Menu\n" + menu + "Ingrese la posicion de campo a modificar:"));
                 } catch (Exception e) {
-                    opc=-1;
+                    opc = -1;
                 }
             }
             String campo;
-            do {            
-                campo=JOptionPane.showInputDialog("Ingrese el nombre del campo:\n*Menor o igual a 12 caracteres*");
-            } while (campo==null||campo.equals("")||campo.length()>12);
-            String[] tipos={"int","String","double","boolean"};
+            do {
+                campo = JOptionPane.showInputDialog("Ingrese el nombre del campo:\n*Menor o igual a 12 caracteres*");
+            } while (campo == null || campo.equals("") || campo.length() > 12);
+            String[] tipos = {"int", "String", "double", "boolean"};
             int respuesta = JOptionPane.showOptionDialog(null, "Presione el boton del tipo de dato a usar en el campo:",
-                    "Seleccione un tipo",JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, tipos, tipos[0]);
-            String tipo="";
-            switch(respuesta){
+                    "Seleccione un tipo", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, tipos, tipos[0]);
+            String tipo = "";
+            switch (respuesta) {
                 case 0:
-                    tipo="int";
+                    tipo = "int";
                     break;
                 case 1:
-                    tipo="String";
+                    tipo = "String";
                     break;
                 case 2:
-                    tipo="double";
+                    tipo = "double";
                     break;
                 case 3:
-                    tipo="boolean";
+                    tipo = "boolean";
                 default:
                     break;
             }
-            int size=-1;
-            while(size<1||size>15){
+            int size = -1;
+            while (size < 1 || size > 15) {
                 try {
-                    size=Integer.parseInt(JOptionPane.showInputDialog("Ingrese el tamaño del campo entre 1-15:"));
+                    size = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el tamaño del campo entre 1-15:"));
                 } catch (Exception e) {
-                    size=-1;
+                    size = -1;
                 }
             }
-            int confirmacion = JOptionPane.showConfirmDialog (null, "El campo es una llave?",null,JOptionPane.YES_NO_OPTION);
-            if(confirmacion == JOptionPane.YES_OPTION) {
+            int confirmacion = JOptionPane.showConfirmDialog(null, "El campo es una llave?", null, JOptionPane.YES_NO_OPTION);
+            if (confirmacion == JOptionPane.YES_OPTION) {
                 llaveunica.remove(opc);
                 llaveunica.add(opc, true);
-            }else if(confirmacion == JOptionPane.NO_OPTION){
+            } else if (confirmacion == JOptionPane.NO_OPTION) {
                 llaveunica.remove(opc);
                 llaveunica.add(opc, false);
                 System.out.println("Entra Modificar");
             }
             campos.remove(opc);
-            campos.add(opc,campo);
+            campos.add(opc, campo);
             tiposcampos.remove(opc);
-            tiposcampos.add(opc,tipo);
+            tiposcampos.add(opc, tipo);
             sizecampos.remove(opc);
-            sizecampos.add(opc,size);
+            sizecampos.add(opc, size);
             JOptionPane.showMessageDialog(this, "Se ha modificado el campo exitosamente.");
         }
     }//GEN-LAST:event_jb_modificarcampoMouseClicked
@@ -619,16 +624,14 @@ public class Principal extends javax.swing.JFrame {
     private void jb_listarcampoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_listarcampoMouseClicked
         // TODO add your handling code here:
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Nombre", "Tipo", "Tamaño", "Llave Unica"
-            }
+                new Object[][]{},
+                new String[]{
+                    "Nombre", "Tipo", "Tamaño", "Llave Unica"
+                }
         ));
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
         for (int i = 0; i < campos.size(); i++) {
-            Object[] row = {campos.get(i),tiposcampos.get(i),sizecampos.get(i),llaveunica.get(i)};
+            Object[] row = {campos.get(i), tiposcampos.get(i), sizecampos.get(i), llaveunica.get(i)};
             modelo.addRow(row);
         }
         jTable1.setModel(modelo);
@@ -639,17 +642,17 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (campos.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No hay campos creados.");
-        }else{
-            String menu="";
+        } else {
+            String menu = "";
             for (int i = 0; i < campos.size(); i++) {
-                menu+="Posicion:"+i+" "+campos.get(i)+"\n";
+                menu += "Posicion:" + i + " " + campos.get(i) + "\n";
             }
-            int opc=-1;
-            while(opc<0||opc>campos.size()){
+            int opc = -1;
+            while (opc < 0 || opc > campos.size()) {
                 try {
-                    opc=Integer.parseInt(JOptionPane.showInputDialog("Menu\n"+menu+"Ingrese la posicion de campo a borrar:"));
+                    opc = Integer.parseInt(JOptionPane.showInputDialog("Menu\n" + menu + "Ingrese la posicion de campo a borrar:"));
                 } catch (Exception e) {
-                    opc=-1;
+                    opc = -1;
                 }
             }
             campos.remove(opc);
@@ -665,14 +668,6 @@ public class Principal extends javax.swing.JFrame {
         jd_Campos.dispose();
     }//GEN-LAST:event_jb_regresarcamposMouseClicked
 
-    private void jm_camposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_camposActionPerformed
-        // TODO add your handling code here:
-        jd_Campos.setModal(true);
-        jd_Campos.setLocationRelativeTo(this);
-        jd_Campos.pack();
-        jd_Campos.setVisible(true);
-    }//GEN-LAST:event_jm_camposActionPerformed
-
     private void jm_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_guardarActionPerformed
         // TODO add your handling code here:
         try {
@@ -684,7 +679,7 @@ public class Principal extends javax.swing.JFrame {
                 flujo.writeBoolean(llaveunica.get(i));
             }
             System.out.println(flujo.length());
-            
+
             flujo.close();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
@@ -693,6 +688,21 @@ public class Principal extends javax.swing.JFrame {
         jm_guardar.setEnabled(false);
         jb_nuevoarchivo.setEnabled(true);
     }//GEN-LAST:event_jm_guardarActionPerformed
+
+    private void jm_registroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jm_registroMouseClicked
+        jd_Registro.setModal(true);
+        jd_Registro.pack();
+        jd_Registro.setLocationRelativeTo(this);
+        jd_Registro.setVisible(true);
+    }//GEN-LAST:event_jm_registroMouseClicked
+
+    private void jm_camposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_camposActionPerformed
+        // TODO add your handling code here:
+        jd_Campos.setModal(true);
+        jd_Campos.pack();
+        jd_Campos.setLocationRelativeTo(this);
+        jd_Campos.setVisible(true);
+    }//GEN-LAST:event_jm_camposActionPerformed
 
     /**
      * @param args the command line arguments
@@ -764,9 +774,9 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jm_registro;
     // End of variables declaration//GEN-END:variables
     private File archivo = null;
-    private RandomAccessFile flujo=null;
-    ArrayList<String> campos=new ArrayList();
-    ArrayList<String> tiposcampos=new ArrayList();
-    ArrayList<Integer> sizecampos=new ArrayList();
-    ArrayList<Boolean> llaveunica=new ArrayList();
+    private RandomAccessFile flujo = null;
+    ArrayList<String> campos = new ArrayList();
+    ArrayList<String> tiposcampos = new ArrayList();
+    ArrayList<Integer> sizecampos = new ArrayList();
+    ArrayList<Boolean> llaveunica = new ArrayList();
 }
