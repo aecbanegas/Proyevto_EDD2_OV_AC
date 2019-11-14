@@ -416,7 +416,9 @@ public class Principal extends javax.swing.JFrame {
     private void jMenu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MouseClicked
         try {
             // TODO add your handling code here:
-            flujo.close();
+            if (flujo != null) {
+                flujo.close();
+            }
         } catch (IOException ex) {
         }
         System.exit(0);
@@ -438,6 +440,7 @@ public class Principal extends javax.swing.JFrame {
 
                 // despues de que cargue el archivo valido
                 jm_archivo.setEnabled(true);
+                jb_nuevoarchivo.setEnabled(false);
 
             } else {
                 JOptionPane.showMessageDialog(this, "No Cargo Ningun Archivo");
@@ -450,22 +453,24 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_cargararchivoMouseClicked
 
     private void jb_nuevoarchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_nuevoarchivoMouseClicked
-        String path = JOptionPane.showInputDialog("Ingrese el nombre del archivo: \n***Asegurese de que no existe un archivo con el mismo nombre***");
-        archivo = new File("./" + path + ".ovac");
-        while (archivo.exists()) {
-            path = JOptionPane.showInputDialog("Ingrese el nombre del archivo: \n***Asegurese de que no existe un archivo con el mismo nombre***");
+        if (jb_nuevoarchivo.isEnabled() == true) {
+            String path = JOptionPane.showInputDialog("Ingrese el nombre del archivo: \n***Asegurese de que no existe un archivo con el mismo nombre***");
             archivo = new File("./" + path + ".ovac");
+            while (archivo.exists()) {
+                path = JOptionPane.showInputDialog("Ingrese el nombre del archivo: \n***Asegurese de que no existe un archivo con el mismo nombre***");
+                archivo = new File("./" + path + ".ovac");
+            }
+            try {
+                archivo.createNewFile();
+                flujo = new RandomAccessFile(archivo, "rw");
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
+            //despues de crear un archivo enable para guardarlo y enable para archivo
+            jb_nuevoarchivo.setEnabled(false);
+            jm_archivo.setEnabled(true);
+            jm_guardar.setEnabled(true);
         }
-        try {
-            archivo.createNewFile();
-            flujo = new RandomAccessFile(archivo, "rw");
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-        //despues de crear un archivo enable para guardarlo y enable para archivo
-        jb_nuevoarchivo.setEnabled(false);
-        jm_archivo.setEnabled(true);
-        jm_guardar.setEnabled(true);
     }//GEN-LAST:event_jb_nuevoarchivoMouseClicked
 
     private void jm_archivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jm_archivoMouseClicked
