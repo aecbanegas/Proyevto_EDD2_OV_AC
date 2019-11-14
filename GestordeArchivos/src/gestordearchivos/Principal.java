@@ -511,14 +511,16 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jm_archivoMouseClicked
 
     private void jm_guardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jm_guardarMouseClicked
-        if (jm_guardar.isEnabled()==true) {
+        if (jm_guardar.isEnabled()) {
             try {
+                //Metadata size 400
                 for (int i = 0; i < campos.size(); i++) {
                     flujo.writeUTF(campos.get(i));
                     flujo.writeUTF(tiposcampos.get(i));
                     flujo.writeInt(sizecampos.get(i));
                     flujo.writeBoolean(llaveunica.get(i));
                 }
+
 
                 flujo.close();
             } catch (IOException ex) {
@@ -530,9 +532,8 @@ public class Principal extends javax.swing.JFrame {
             tiposcampos.clear();
             jm_archivo.setEnabled(false);
             jm_guardar.setEnabled(false);
-            jb_cargararchivo.setEnabled(true);
             jb_nuevoarchivo.setEnabled(true);
-            
+            JOptionPane.showMessageDialog(this,"Se ha guardado el archivo de manera satisfactoria!\nSe ha procedido a cerrarlo!");
         }
     }//GEN-LAST:event_jm_guardarMouseClicked
 
@@ -599,7 +600,23 @@ public class Principal extends javax.swing.JFrame {
             tiposcampos.add(tipo);
             sizecampos.add(size);
             JOptionPane.showMessageDialog(jd_Campos, "Se ha agregado el campo exitosamente.");
-
+            jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                new String[]{
+                    "Nombre", "Tipo", "Tamaño", "Llave Unica"
+                }
+            ));
+            DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+            for (int i = 0; i < campos.size(); i++) {
+                if (sizecampos.get(i)!=-1) {
+                    Object[] row = {campos.get(i), tiposcampos.get(i), sizecampos.get(i), llaveunica.get(i)};
+                    modelo.addRow(row);
+                }else{
+                    Object[] row = {campos.get(i), tiposcampos.get(i), "N/A", llaveunica.get(i)};
+                    modelo.addRow(row);
+                }           
+            }
+            jTable1.setModel(modelo);
             jm_registro.setForeground(Color.BLACK);
             jm_estandarizacion.setForeground(Color.BLACK);
 
