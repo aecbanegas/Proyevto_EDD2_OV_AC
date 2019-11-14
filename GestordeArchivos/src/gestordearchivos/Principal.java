@@ -439,7 +439,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu3MouseClicked
 
     private void jb_cargararchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_cargararchivoMouseClicked
-        JFileChooser jf = new JFileChooser();
+        JFileChooser jf = new JFileChooser("./");
 
         try {
             FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos OVAC", "ovac");
