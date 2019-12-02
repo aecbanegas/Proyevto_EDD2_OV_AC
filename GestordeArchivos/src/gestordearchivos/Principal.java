@@ -905,7 +905,7 @@ public class Principal extends javax.swing.JFrame {
                     flujo.writeInt(sizecampos.get(i));
                     flujo.writeBoolean(llaveunica.get(i));
                 }
-
+                
 
                 flujo.close();
             } catch (IOException ex) {

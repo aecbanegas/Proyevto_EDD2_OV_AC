@@ -27,8 +27,6 @@ public class Registro implements Serializable{
     public void setKey(int key) {
         this.key = key;
     }
-
-    
     
     public long getRRN() {
         return RRN;
