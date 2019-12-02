@@ -160,6 +160,7 @@
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jb_regresarcamposMouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jb_regresarcamposActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
@@ -372,7 +373,7 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jm_archivo">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Archivo"/>
+            <Property name="text" type="java.lang.String" value="Opciones de Archivo"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>

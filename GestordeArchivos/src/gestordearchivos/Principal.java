@@ -6,16 +6,10 @@
 package gestordearchivos;
 
 import java.awt.Color;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -146,6 +140,11 @@ public class Principal extends javax.swing.JFrame {
         jb_regresarcampos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jb_regresarcamposMouseClicked(evt);
+            }
+        });
+        jb_regresarcampos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_regresarcamposActionPerformed(evt);
             }
         });
 
@@ -327,7 +326,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("GESTOR DE BASES DE DATOS OVAC");
 
-        jm_archivo.setText("Archivo");
+        jm_archivo.setText("Opciones de Archivo");
         jm_archivo.setEnabled(false);
         jm_archivo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -450,9 +449,18 @@ public class Principal extends javax.swing.JFrame {
             
             if (selec == JFileChooser.APPROVE_OPTION) {
                 archivo=jf.getSelectedFile();
+                String path=archivo.getName();
+                String pathbt="";
+                for (int i = 0; i < path.length()-4; i++) {
+                    pathbt+=path.charAt(i);
+                }
+                System.out.println("Path para bt: "+pathbt);
+                archivoBtree=new File("./"+pathbt+"ovacbt");                
                 flujo=new RandomAccessFile(archivo, "rw");
+                flujoBtree=new RandomAccessFile(archivoBtree, "rw");
                 try {
-                    for (int i = 0; i < 8; i++) {
+                    int cantidad=flujo.readInt();
+                    for (int i = 0; i < cantidad; i++) {
                         campos.add(flujo.readUTF());
                         tiposcampos.add(flujo.readUTF());
                         sizecampos.add(flujo.readInt());
@@ -486,13 +494,17 @@ public class Principal extends javax.swing.JFrame {
         if (jb_nuevoarchivo.isEnabled() == true) {
             String path = JOptionPane.showInputDialog("Ingrese el nombre del archivo: \n***Asegurese de que no existe un archivo con el mismo nombre***");
             archivo = new File("./" + path + ".ovac");
+            archivoBtree=new File("./" + path + ".ovacbt");
             while (archivo.exists()) {
                 path = JOptionPane.showInputDialog("Ingrese el nombre del archivo: \n***Asegurese de que no existe un archivo con el mismo nombre***");
                 archivo = new File("./" + path + ".ovac");
+                archivoBtree=new File("./" + path + ".ovacbt");
             }
-            try {
+            try {                
+                archivoBtree.createNewFile();
                 archivo.createNewFile();
                 flujo = new RandomAccessFile(archivo, "rw");
+                flujoBtree=new RandomAccessFile(archivoBtree, "rw");
             } catch (Exception e) {
                 System.err.println(e.getMessage());
             }
@@ -513,14 +525,14 @@ public class Principal extends javax.swing.JFrame {
     private void jm_guardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jm_guardarMouseClicked
         if (jm_guardar.isEnabled()) {
             try {
-                //Metadata size 400
+                flujo.writeLong(campos.size());
                 for (int i = 0; i < campos.size(); i++) {
                     flujo.writeUTF(campos.get(i));
                     flujo.writeUTF(tiposcampos.get(i));
                     flujo.writeInt(sizecampos.get(i));
                     flujo.writeBoolean(llaveunica.get(i));
                 }
-
+                System.out.println("Tamaño en bytes: "+flujo.length());
 
                 flujo.close();
             } catch (IOException ex) {
@@ -566,7 +578,7 @@ public class Principal extends javax.swing.JFrame {
             int size = -1;
             while (size < 1 || size > 15) {
                 try {
-                    if (tipo.equals("int")||tipo.equals("double")) {
+                    if (tipo.equals("int")||tipo.equals("double")||tipo.equals("boolean")) {
                         
                     }else{
                         size = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el tamaño del campo entre 1-15:"));
@@ -588,13 +600,16 @@ public class Principal extends javax.swing.JFrame {
                 //Valida que la llave sea unica
                 llaveunica.add(false);
             }else{
-                int confirmacion = JOptionPane.showConfirmDialog(null, "El campo es una llave?", null, JOptionPane.YES_NO_OPTION);
-                if (confirmacion == JOptionPane.YES_OPTION) {
-                    llaveunica.add(true);
-                } else if (confirmacion == JOptionPane.NO_OPTION) {
+                if (tipo.equals("boolean")) {
                     llaveunica.add(false);
-                    System.out.println("Entra");
-                }
+                }else{
+                    int confirmacion = JOptionPane.showConfirmDialog(null, "El campo es una llave?", null, JOptionPane.YES_NO_OPTION);
+                    if (confirmacion == JOptionPane.YES_OPTION) {
+                        llaveunica.add(true);
+                    } else if (confirmacion == JOptionPane.NO_OPTION) {
+                        llaveunica.add(false);
+                    }
+                }                
             }            
             campos.add(campo);
             tiposcampos.add(tipo);
@@ -746,7 +761,7 @@ public class Principal extends javax.swing.JFrame {
     private void jb_borrarcampoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_borrarcampoMouseClicked
         // TODO add your handling code here:
         if (campos.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No hay campos creados.");
+            JOptionPane.showMessageDialog(jd_Campos, "No hay campos creados.");
         } else {
             String menu = "";
             for (int i = 0; i < campos.size(); i++) {
@@ -764,7 +779,24 @@ public class Principal extends javax.swing.JFrame {
             sizecampos.remove(opc);
             llaveunica.remove(opc);
             tiposcampos.remove(opc);
-            JOptionPane.showMessageDialog(this, "Se ha borrado el campo exitosamente.");
+            jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                new String[]{
+                    "Nombre", "Tipo", "Tamaño", "Llave Unica"
+                }
+            ));
+            DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+            for (int i = 0; i < campos.size(); i++) {
+                if (sizecampos.get(i)!=-1) {
+                    Object[] row = {campos.get(i), tiposcampos.get(i), sizecampos.get(i), llaveunica.get(i)};
+                    modelo.addRow(row);
+                }else{
+                    Object[] row = {campos.get(i), tiposcampos.get(i), "N/A", llaveunica.get(i)};
+                    modelo.addRow(row);
+                }           
+            }
+            jTable1.setModel(modelo);
+            JOptionPane.showMessageDialog(jd_Campos, "Se ha borrado el campo exitosamente.");
         }
     }//GEN-LAST:event_jb_borrarcampoMouseClicked
 
@@ -777,8 +809,14 @@ public class Principal extends javax.swing.JFrame {
                 break;
             }
         }
-        if (flag) {
+        if (flag) {            
             jd_Campos.dispose();
+            jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                new String[]{
+                    "Nombre", "Tipo", "Tamaño", "Llave Unica"
+                }
+            ));
         }else{
             JOptionPane.showMessageDialog(jd_Campos, "Debe tener al menos un campo que sea llave!\nIntente de nuevo luego de crear un campo llave\nSi llego al maximo de campos se recomienda borrar o modificar un campo!");
         }
@@ -788,7 +826,7 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (jm_guardar.isEnabled()) {
             try {
-                //Metadata size 400
+                flujo.writeInt(campos.size());
                 for (int i = 0; i < campos.size(); i++) {
                     flujo.writeUTF(campos.get(i));
                     flujo.writeUTF(tiposcampos.get(i));
@@ -831,7 +869,7 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (flujo!=null) {
             try {
-                //Metadata size 400
+                flujo.writeInt(campos.size());
                 for (int i = 0; i < campos.size(); i++) {
                     flujo.writeUTF(campos.get(i));
                     flujo.writeUTF(tiposcampos.get(i));
@@ -860,7 +898,7 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (flujo!=null) {
             try {
-                //Metadata size 400
+                flujo.writeInt(campos.size());
                 for (int i = 0; i < campos.size(); i++) {
                     flujo.writeUTF(campos.get(i));
                     flujo.writeUTF(tiposcampos.get(i));
@@ -884,6 +922,10 @@ public class Principal extends javax.swing.JFrame {
         }
         System.exit(0);
     }//GEN-LAST:event_jm_exitsaveMouseClicked
+
+    private void jb_regresarcamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_regresarcamposActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_regresarcamposActionPerformed
 
     /**
      * @param args the command line arguments
@@ -956,7 +998,9 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jm_registro;
     // End of variables declaration//GEN-END:variables
     private File archivo = null;
+    private File archivoBtree = null;
     private RandomAccessFile flujo = null;
+    private RandomAccessFile flujoBtree=null;
     ArrayList<String> campos = new ArrayList();
     ArrayList<String> tiposcampos = new ArrayList();
     ArrayList<Integer> sizecampos = new ArrayList();
