@@ -446,20 +446,20 @@ public class Principal extends javax.swing.JFrame {
             jf.setFileFilter(filtro);
             //jf.addChoosableFileFilter(filtro2);
             int selec = jf.showOpenDialog(this);
-            
+
             if (selec == JFileChooser.APPROVE_OPTION) {
-                archivo=jf.getSelectedFile();
-                String path=archivo.getName();
-                String pathbt="";
-                for (int i = 0; i < path.length()-4; i++) {
-                    pathbt+=path.charAt(i);
+                archivo = jf.getSelectedFile();
+                String path = archivo.getName();
+                String pathbt = "";
+                for (int i = 0; i < path.length() - 4; i++) {
+                    pathbt += path.charAt(i);
                 }
-                System.out.println("Path para bt: "+pathbt);
-                archivoBtree=new File("./"+pathbt+"ovacbt");                
-                flujo=new RandomAccessFile(archivo, "rw");
-                flujoBtree=new RandomAccessFile(archivoBtree, "rw");
+                System.out.println("Path para bt: " + pathbt);
+                archivoBtree = new File("./" + pathbt + "ovacbt");
+                flujo = new RandomAccessFile(archivo, "rw");
+                flujoBtree = new RandomAccessFile(archivoBtree, "rw");
                 try {
-                    int cantidad=flujo.readInt();
+                    int cantidad = flujo.readInt();
                     for (int i = 0; i < cantidad; i++) {
                         campos.add(flujo.readUTF());
                         tiposcampos.add(flujo.readUTF());
@@ -468,10 +468,10 @@ public class Principal extends javax.swing.JFrame {
                     }
                 } catch (Exception e) {
                     System.err.println(e.getMessage());
-                    System.out.println("Campos= "+campos.size());
-                    System.out.println("Tipos= "+tiposcampos.size());
-                    System.out.println("Tamaños= "+sizecampos.size());
-                    System.out.println("Llaves= "+llaveunica.size());
+                    System.out.println("Campos= " + campos.size());
+                    System.out.println("Tipos= " + tiposcampos.size());
+                    System.out.println("Tamaños= " + sizecampos.size());
+                    System.out.println("Llaves= " + llaveunica.size());
                 }
                 JOptionPane.showMessageDialog(this, "Archivo Cargado Exitosamente");
 
@@ -494,17 +494,17 @@ public class Principal extends javax.swing.JFrame {
         if (jb_nuevoarchivo.isEnabled() == true) {
             String path = JOptionPane.showInputDialog("Ingrese el nombre del archivo: \n***Asegurese de que no existe un archivo con el mismo nombre***");
             archivo = new File("./" + path + ".ovac");
-            archivoBtree=new File("./" + path + ".ovacbt");
+            archivoBtree = new File("./" + path + ".ovacbt");
             while (archivo.exists()) {
                 path = JOptionPane.showInputDialog("Ingrese el nombre del archivo: \n***Asegurese de que no existe un archivo con el mismo nombre***");
                 archivo = new File("./" + path + ".ovac");
-                archivoBtree=new File("./" + path + ".ovacbt");
+                archivoBtree = new File("./" + path + ".ovacbt");
             }
-            try {                
+            try {
                 archivoBtree.createNewFile();
                 archivo.createNewFile();
                 flujo = new RandomAccessFile(archivo, "rw");
-                flujoBtree=new RandomAccessFile(archivoBtree, "rw");
+                flujoBtree = new RandomAccessFile(archivoBtree, "rw");
             } catch (Exception e) {
                 System.err.println(e.getMessage());
             }
@@ -532,7 +532,7 @@ public class Principal extends javax.swing.JFrame {
                     flujo.writeInt(sizecampos.get(i));
                     flujo.writeBoolean(llaveunica.get(i));
                 }
-                System.out.println("Tamaño en bytes: "+flujo.length());
+                System.out.println("Tamaño en bytes: " + flujo.length());
 
                 flujo.close();
             } catch (IOException ex) {
@@ -545,7 +545,7 @@ public class Principal extends javax.swing.JFrame {
             jm_archivo.setEnabled(false);
             jm_guardar.setEnabled(false);
             jb_nuevoarchivo.setEnabled(true);
-            JOptionPane.showMessageDialog(this,"Se ha guardado el archivo de manera satisfactoria!\nSe ha procedido a cerrarlo!");
+            JOptionPane.showMessageDialog(this, "Se ha guardado el archivo de manera satisfactoria!\nSe ha procedido a cerrarlo!");
         }
     }//GEN-LAST:event_jm_guardarMouseClicked
 
@@ -578,58 +578,60 @@ public class Principal extends javax.swing.JFrame {
             int size = -1;
             while (size < 1 || size > 15) {
                 try {
-                    if (tipo.equals("int")||tipo.equals("double")||tipo.equals("boolean")) {
-                        
-                    }else{
+                    if (tipo.equals("int") || tipo.equals("double") || tipo.equals("boolean")) {
+                        boolean flag = false;
+                        for (int i = 0; i < llaveunica.size(); i++) {
+                            if (llaveunica.get(i) == true) {
+                                flag = true;
+                            }
+                        }
+                        if (flag) {
+                            //Valida que la llave sea unica
+                            llaveunica.add(false);
+                        } else {
+                            if (tipo.equals("boolean")) {
+                                llaveunica.add(false);
+                            } else {
+                                int confirmacion = JOptionPane.showConfirmDialog(null, "El campo es una llave?", null, JOptionPane.YES_NO_OPTION);
+                                if (confirmacion == JOptionPane.YES_OPTION) {
+                                    llaveunica.add(true);
+                                } else if (confirmacion == JOptionPane.NO_OPTION) {
+                                    llaveunica.add(false);
+                                }
+                            }
+                        }
+                    } else {
                         size = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el tamaño del campo entre 1-15:"));
                     }
                 } catch (Exception e) {
                     size = -1;
                 }
-                if (size==-1) {
+                if (size == -1) {
                     break;
                 }
             }
-            boolean flag=false;
-            for (int i = 0; i < llaveunica.size(); i++) {
-                if (llaveunica.get(i)==true) {
-                    flag=true;
-                }
-            }
-            if (flag) {
-                //Valida que la llave sea unica
-                llaveunica.add(false);
-            }else{
-                if (tipo.equals("boolean")) {
-                    llaveunica.add(false);
-                }else{
-                    int confirmacion = JOptionPane.showConfirmDialog(null, "El campo es una llave?", null, JOptionPane.YES_NO_OPTION);
-                    if (confirmacion == JOptionPane.YES_OPTION) {
-                        llaveunica.add(true);
-                    } else if (confirmacion == JOptionPane.NO_OPTION) {
-                        llaveunica.add(false);
-                    }
-                }                
-            }            
+
+            llaveunica.add(false);
+
             campos.add(campo);
             tiposcampos.add(tipo);
             sizecampos.add(size);
             JOptionPane.showMessageDialog(jd_Campos, "Se ha agregado el campo exitosamente.");
             jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][]{},
-                new String[]{
-                    "Nombre", "Tipo", "Tamaño", "Llave Unica"
-                }
+                    new Object[][]{},
+                    new String[]{
+                        "Nombre", "Tipo", "Tamaño", "Llave Unica"
+                    }
             ));
             DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
             for (int i = 0; i < campos.size(); i++) {
-                if (sizecampos.get(i)!=-1) {
+                if (sizecampos.get(i) != -1) {
                     Object[] row = {campos.get(i), tiposcampos.get(i), sizecampos.get(i), llaveunica.get(i)};
                     modelo.addRow(row);
-                }else{
+                } else {
                     Object[] row = {campos.get(i), tiposcampos.get(i), "N/A", llaveunica.get(i)};
                     modelo.addRow(row);
-                }           
+                }
             }
             jTable1.setModel(modelo);
             jm_registro.setForeground(Color.BLACK);
@@ -684,25 +686,25 @@ public class Principal extends javax.swing.JFrame {
             int size = -1;
             while (size < 1 || size > 15) {
                 try {
-                    if (tipo.equals("int")||tipo.equals("double")) {
-                        
-                    }else{
+                    if (tipo.equals("int") || tipo.equals("double")) {
+
+                    } else {
                         size = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el tamaño del campo entre 1-15:"));
-                    }                 
+                    }
                 } catch (Exception e) {
                     size = -1;
                 }
-                if (size==-1) {
+                if (size == -1) {
                     break;
                 }
             }
-            boolean flag=false;
+            boolean flag = false;
             for (int i = 0; i < llaveunica.size(); i++) {
-                if (llaveunica.get(i)==true) {
-                    flag=true;
+                if (llaveunica.get(i) == true) {
+                    flag = true;
                 }
             }
-            if (llaveunica.get(opc)==true) {
+            if (llaveunica.get(opc) == true) {
                 int confirmacion = JOptionPane.showConfirmDialog(null, "El campo es una llave?", null, JOptionPane.YES_NO_OPTION);
                 if (confirmacion == JOptionPane.YES_OPTION) {
                     llaveunica.remove(opc);
@@ -715,7 +717,7 @@ public class Principal extends javax.swing.JFrame {
             }
             if (flag) {
                 //Valida que la llave sea unica
-            }else{
+            } else {
                 int confirmacion = JOptionPane.showConfirmDialog(null, "El campo es una llave?", null, JOptionPane.YES_NO_OPTION);
                 if (confirmacion == JOptionPane.YES_OPTION) {
                     llaveunica.remove(opc);
@@ -746,13 +748,13 @@ public class Principal extends javax.swing.JFrame {
         ));
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
         for (int i = 0; i < campos.size(); i++) {
-            if (sizecampos.get(i)!=-1) {
+            if (sizecampos.get(i) != -1) {
                 Object[] row = {campos.get(i), tiposcampos.get(i), sizecampos.get(i), llaveunica.get(i)};
                 modelo.addRow(row);
-            }else{
+            } else {
                 Object[] row = {campos.get(i), tiposcampos.get(i), "N/A", llaveunica.get(i)};
                 modelo.addRow(row);
-            }           
+            }
         }
         jTable1.setModel(modelo);
         JOptionPane.showMessageDialog(jd_Campos, "Se ha completado la lista de campos.");
@@ -780,20 +782,20 @@ public class Principal extends javax.swing.JFrame {
             llaveunica.remove(opc);
             tiposcampos.remove(opc);
             jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][]{},
-                new String[]{
-                    "Nombre", "Tipo", "Tamaño", "Llave Unica"
-                }
+                    new Object[][]{},
+                    new String[]{
+                        "Nombre", "Tipo", "Tamaño", "Llave Unica"
+                    }
             ));
             DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
             for (int i = 0; i < campos.size(); i++) {
-                if (sizecampos.get(i)!=-1) {
+                if (sizecampos.get(i) != -1) {
                     Object[] row = {campos.get(i), tiposcampos.get(i), sizecampos.get(i), llaveunica.get(i)};
                     modelo.addRow(row);
-                }else{
+                } else {
                     Object[] row = {campos.get(i), tiposcampos.get(i), "N/A", llaveunica.get(i)};
                     modelo.addRow(row);
-                }           
+                }
             }
             jTable1.setModel(modelo);
             JOptionPane.showMessageDialog(jd_Campos, "Se ha borrado el campo exitosamente.");
@@ -802,22 +804,22 @@ public class Principal extends javax.swing.JFrame {
 
     private void jb_regresarcamposMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_regresarcamposMouseClicked
         // TODO add your handling code here:
-        boolean flag=false;
+        boolean flag = false;
         for (int i = 0; i < llaveunica.size(); i++) {
-            if (llaveunica.get(i)==true) {
-                flag=true;
+            if (llaveunica.get(i) == true) {
+                flag = true;
                 break;
             }
         }
-        if (flag) {            
+        if (flag) {
             jd_Campos.dispose();
             jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][]{},
-                new String[]{
-                    "Nombre", "Tipo", "Tamaño", "Llave Unica"
-                }
+                    new Object[][]{},
+                    new String[]{
+                        "Nombre", "Tipo", "Tamaño", "Llave Unica"
+                    }
             ));
-        }else{
+        } else {
             JOptionPane.showMessageDialog(jd_Campos, "Debe tener al menos un campo que sea llave!\nIntente de nuevo luego de crear un campo llave\nSi llego al maximo de campos se recomienda borrar o modificar un campo!");
         }
     }//GEN-LAST:event_jb_regresarcamposMouseClicked
@@ -834,7 +836,6 @@ public class Principal extends javax.swing.JFrame {
                     flujo.writeBoolean(llaveunica.get(i));
                 }
 
-
                 flujo.close();
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
@@ -846,7 +847,7 @@ public class Principal extends javax.swing.JFrame {
             jm_archivo.setEnabled(false);
             jm_guardar.setEnabled(false);
             jb_nuevoarchivo.setEnabled(true);
-            JOptionPane.showMessageDialog(this,"Se ha guardado el archivo de manera satisfactoria!\nSe ha procedido a cerrarlo!");
+            JOptionPane.showMessageDialog(this, "Se ha guardado el archivo de manera satisfactoria!\nSe ha procedido a cerrarlo!");
         }
     }//GEN-LAST:event_jm_guardarActionPerformed
 
@@ -867,7 +868,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void jm_exitsaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_exitsaveActionPerformed
         // TODO add your handling code here:
-        if (flujo!=null) {
+        if (flujo != null) {
             try {
                 flujo.writeInt(campos.size());
                 for (int i = 0; i < campos.size(); i++) {
@@ -876,7 +877,6 @@ public class Principal extends javax.swing.JFrame {
                     flujo.writeInt(sizecampos.get(i));
                     flujo.writeBoolean(llaveunica.get(i));
                 }
-
 
                 flujo.close();
             } catch (IOException ex) {
@@ -889,14 +889,14 @@ public class Principal extends javax.swing.JFrame {
             jm_archivo.setEnabled(false);
             jm_guardar.setEnabled(false);
             jb_nuevoarchivo.setEnabled(true);
-            JOptionPane.showMessageDialog(this,"Se ha guardado el archivo de manera satisfactoria!\nSe ha procedido a cerrarlo!");
+            JOptionPane.showMessageDialog(this, "Se ha guardado el archivo de manera satisfactoria!\nSe ha procedido a cerrarlo!");
         }
         System.exit(0);
     }//GEN-LAST:event_jm_exitsaveActionPerformed
 
     private void jm_exitsaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jm_exitsaveMouseClicked
         // TODO add your handling code here:
-        if (flujo!=null) {
+        if (flujo != null) {
             try {
                 flujo.writeInt(campos.size());
                 for (int i = 0; i < campos.size(); i++) {
@@ -905,7 +905,6 @@ public class Principal extends javax.swing.JFrame {
                     flujo.writeInt(sizecampos.get(i));
                     flujo.writeBoolean(llaveunica.get(i));
                 }
-                
 
                 flujo.close();
             } catch (IOException ex) {
@@ -918,7 +917,7 @@ public class Principal extends javax.swing.JFrame {
             jm_archivo.setEnabled(false);
             jm_guardar.setEnabled(false);
             jb_nuevoarchivo.setEnabled(true);
-            JOptionPane.showMessageDialog(this,"Se ha guardado el archivo de manera satisfactoria!\nSe ha procedido a cerrarlo!");
+            JOptionPane.showMessageDialog(this, "Se ha guardado el archivo de manera satisfactoria!\nSe ha procedido a cerrarlo!");
         }
         System.exit(0);
     }//GEN-LAST:event_jm_exitsaveMouseClicked
@@ -1000,7 +999,7 @@ public class Principal extends javax.swing.JFrame {
     private File archivo = null;
     private File archivoBtree = null;
     private RandomAccessFile flujo = null;
-    private RandomAccessFile flujoBtree=null;
+    private RandomAccessFile flujoBtree = null;
     ArrayList<String> campos = new ArrayList();
     ArrayList<String> tiposcampos = new ArrayList();
     ArrayList<Integer> sizecampos = new ArrayList();
