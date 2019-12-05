@@ -578,7 +578,7 @@ public class Principal extends javax.swing.JFrame {
             int size = -1;
             while (size < 1 || size > 15) {
                 try {
-                    if (tipo.equals("int") || tipo.equals("double") || tipo.equals("boolean")) {
+                    if (tipo.equals("int")) {
                         boolean flag = false;
                         for (int i = 0; i < llaveunica.size(); i++) {
                             if (llaveunica.get(i) == true) {
@@ -600,6 +600,8 @@ public class Principal extends javax.swing.JFrame {
                                 }
                             }
                         }
+                    }else if (tipo.equals("double") || tipo.equals("boolean")) {
+                        
                     } else {
                         size = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el tamaño del campo entre 1-15:"));
                     }
