@@ -565,7 +565,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jm_archivoMouseClicked
 
     private void jm_guardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jm_guardarMouseClicked
-        if (jm_guardar.isEnabled()) {
+        /*        if (jm_guardar.isEnabled()) {
             try {
                 flujo.writeLong(campos.size());
                 for (int i = 0; i < campos.size(); i++) {
@@ -575,6 +575,29 @@ public class Principal extends javax.swing.JFrame {
                     flujo.writeBoolean(llaveunica.get(i));
                 }
                 System.out.println("Tamaño en bytes: " + flujo.length());
+
+                flujo.close();
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
+            campos.clear();
+            sizecampos.clear();
+            llaveunica.clear();
+            tiposcampos.clear();
+            jm_archivo.setEnabled(false);
+            jm_guardar.setEnabled(false);
+            jb_nuevoarchivo.setEnabled(true);
+            JOptionPane.showMessageDialog(this, "Se ha guardado el archivo de manera satisfactoria!\nSe ha procedido a cerrarlo!");
+        }*/
+        if (flujo != null) {
+            try {
+                flujo.writeInt(campos.size());
+                for (int i = 0; i < campos.size(); i++) {
+                    flujo.writeUTF(campos.get(i));
+                    flujo.writeUTF(tiposcampos.get(i));
+                    flujo.writeInt(sizecampos.get(i));
+                    flujo.writeBoolean(llaveunica.get(i));
+                }
 
                 flujo.close();
             } catch (IOException ex) {
@@ -870,7 +893,30 @@ public class Principal extends javax.swing.JFrame {
 
     private void jm_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_guardarActionPerformed
         // TODO add your handling code here:
-        if (jm_guardar.isEnabled()) {
+        /*if (jm_guardar.isEnabled()) {
+            try {
+                flujo.writeInt(campos.size());
+                for (int i = 0; i < campos.size(); i++) {
+                    flujo.writeUTF(campos.get(i));
+                    flujo.writeUTF(tiposcampos.get(i));
+                    flujo.writeInt(sizecampos.get(i));
+                    flujo.writeBoolean(llaveunica.get(i));
+                }
+
+                flujo.close();
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
+            campos.clear();
+            sizecampos.clear();
+            llaveunica.clear();
+            tiposcampos.clear();
+            jm_archivo.setEnabled(false);
+            jm_guardar.setEnabled(false);
+            jb_nuevoarchivo.setEnabled(true);
+            JOptionPane.showMessageDialog(this, "Se ha guardado el archivo de manera satisfactoria!\nSe ha procedido a cerrarlo!");
+        }*/
+        if (flujo != null) {
             try {
                 flujo.writeInt(campos.size());
                 for (int i = 0; i < campos.size(); i++) {
