@@ -88,11 +88,6 @@ public class Principal extends javax.swing.JFrame {
                 jb_regresarcamposMouseClicked(evt);
             }
         });
-        jb_regresarcampos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_regresarcamposActionPerformed(evt);
-            }
-        });
 
         jb_borrarcampo.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jb_borrarcampo.setText("Borrar Campos");
@@ -394,9 +389,9 @@ public class Principal extends javax.swing.JFrame {
 
         jm_registro.setText("Registros");
         jm_registro.setEnabled(false);
-        jm_registro.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jm_registroMouseClicked(evt);
+        jm_registro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jm_registroActionPerformed(evt);
             }
         });
         jm_archivo.add(jm_registro);
@@ -512,6 +507,10 @@ public class Principal extends javax.swing.JFrame {
                 jm_guardar.setEnabled(true);
                 jm_archivo.setEnabled(true);
                 jb_nuevoarchivo.setEnabled(false);
+                jm_registro.setEnabled(true);
+                jm_registro.setForeground(Color.BLACK);
+                jm_estandarizacion.setEnabled(true);
+                jm_estandarizacion.setForeground(Color.BLACK);
 
             } else {
                 JOptionPane.showMessageDialog(this, "No Cargo Ningun Archivo");
@@ -941,13 +940,6 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jm_guardarActionPerformed
 
-    private void jm_registroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jm_registroMouseClicked
-        jd_Registro.setModal(true);
-        jd_Registro.pack();
-        jd_Registro.setLocationRelativeTo(this);
-        jd_Registro.setVisible(true);
-    }//GEN-LAST:event_jm_registroMouseClicked
-
     private void jm_camposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_camposActionPerformed
         // TODO add your handling code here:
         jd_Campos.setModal(true);
@@ -1012,9 +1004,12 @@ public class Principal extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jm_exitsaveMouseClicked
 
-    private void jb_regresarcamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_regresarcamposActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jb_regresarcamposActionPerformed
+    private void jm_registroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_registroActionPerformed
+        jd_Registro.setModal(true);
+        jd_Registro.pack();
+        jd_Registro.setLocationRelativeTo(this);
+        jd_Registro.setVisible(true);
+    }//GEN-LAST:event_jm_registroActionPerformed
 
     /**
      * @param args the command line arguments
