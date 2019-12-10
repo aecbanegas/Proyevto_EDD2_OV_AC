@@ -51,12 +51,14 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jd_Registro = new javax.swing.JDialog();
-        jTabbedPane2 = new javax.swing.JTabbedPane();
-        jPanel4 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
-        jPanel6 = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
-        jPanel8 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         jd_Estandarizacion = new javax.swing.JDialog();
         jLabel3 = new javax.swing.JLabel();
         jButton11 = new javax.swing.JButton();
@@ -215,80 +217,77 @@ public class Principal extends javax.swing.JFrame {
 
         jd_Registro.setSize(new java.awt.Dimension(700, 700));
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 695, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 670, Short.MAX_VALUE)
-        );
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTabbedPane2.addTab("Agregar", jPanel4);
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("GESTOR DE BASES DE DATOS OVAC");
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 695, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 670, Short.MAX_VALUE)
-        );
+        jLabel9.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 51, 51));
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("Menu Registros");
 
-        jTabbedPane2.addTab("Listar", jPanel5);
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jButton1.setText("Indroducir Registro");
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 695, Short.MAX_VALUE)
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 670, Short.MAX_VALUE)
-        );
+        jButton2.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jButton2.setText("Modificar Registro");
 
-        jTabbedPane2.addTab("Buscar", jPanel6);
+        jButton3.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jButton3.setText("Listar Registro");
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 695, Short.MAX_VALUE)
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 670, Short.MAX_VALUE)
-        );
+        jButton4.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jButton4.setText("Buscar Registro");
 
-        jTabbedPane2.addTab("Modificar", jPanel7);
+        jButton5.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jButton5.setText("Borrar Registro");
 
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 695, Short.MAX_VALUE)
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(77, 77, 77))
         );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 670, Short.MAX_VALUE)
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(76, 76, 76)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(87, Short.MAX_VALUE))
         );
-
-        jTabbedPane2.addTab("Borrar", jPanel8);
 
         javax.swing.GroupLayout jd_RegistroLayout = new javax.swing.GroupLayout(jd_Registro.getContentPane());
         jd_Registro.getContentPane().setLayout(jd_RegistroLayout);
         jd_RegistroLayout.setHorizontalGroup(
             jd_RegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jd_RegistroLayout.setVerticalGroup(
             jd_RegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jd_Estandarizacion.setSize(new java.awt.Dimension(700, 700));
@@ -525,27 +524,36 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_cargararchivoMouseClicked
 
     private void jb_nuevoarchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_nuevoarchivoMouseClicked
-        if (jb_nuevoarchivo.isEnabled() == true) {
-            String path = JOptionPane.showInputDialog("Ingrese el nombre del archivo: \n***Asegurese de que no existe un archivo con el mismo nombre***");
-            archivo = new File("./" + path + ".ovac");
-            archivoBtree = new File("./" + path + ".ovacbt");
-            while (archivo.exists()) {
-                path = JOptionPane.showInputDialog("Ingrese el nombre del archivo: \n***Asegurese de que no existe un archivo con el mismo nombre***");
-                archivo = new File("./" + path + ".ovac");
-                archivoBtree = new File("./" + path + ".ovacbt");
+        try {
+            if (jb_nuevoarchivo.isEnabled() == true) {
+                String path = JOptionPane.showInputDialog("Ingrese el nombre del archivo: \n***Asegurese de que no existe un archivo con el mismo nombre***");
+
+                if (path.length() != 0) {
+                    archivo = new File("./" + path + ".ovac");
+                    archivoBtree = new File("./" + path + ".ovacbt");
+                    while (archivo.exists()) {
+                        path = JOptionPane.showInputDialog("Ingrese el nombre del archivo: \n***Asegurese de que no existe un archivo con el mismo nombre***");
+                        archivo = new File("./" + path + ".ovac");
+                        archivoBtree = new File("./" + path + ".ovacbt");
+                    }
+                    try {
+                        archivoBtree.createNewFile();
+                        archivo.createNewFile();
+                        flujo = new RandomAccessFile(archivo, "rw");
+                        flujoBtree = new RandomAccessFile(archivoBtree, "rw");
+                    } catch (Exception e) {
+                        System.err.println(e.getMessage());
+                    }
+                    //despues de crear un archivo enable para guardarlo y enable para archivo
+                    jb_nuevoarchivo.setEnabled(false);
+                    jm_archivo.setEnabled(true);
+                    jm_guardar.setEnabled(true);
+                } else {
+                    JOptionPane.showMessageDialog(this, "NO INGRESO UN NOMBRE VALIDO");
+                }
             }
-            try {
-                archivoBtree.createNewFile();
-                archivo.createNewFile();
-                flujo = new RandomAccessFile(archivo, "rw");
-                flujoBtree = new RandomAccessFile(archivoBtree, "rw");
-            } catch (Exception e) {
-                System.err.println(e.getMessage());
-            }
-            //despues de crear un archivo enable para guardarlo y enable para archivo
-            jb_nuevoarchivo.setEnabled(false);
-            jm_archivo.setEnabled(true);
-            jm_guardar.setEnabled(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "NO INGRESO NADA");
         }
     }//GEN-LAST:event_jb_nuevoarchivoMouseClicked
 
@@ -634,8 +642,8 @@ public class Principal extends javax.swing.JFrame {
                                 }
                             }
                         }
-                    }else if (tipo.equals("double") || tipo.equals("boolean")) {
-                        
+                    } else if (tipo.equals("double") || tipo.equals("boolean")) {
+
                     } else {
                         size = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el tamaño del campo entre 1-15:"));
                     }
@@ -998,24 +1006,26 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JButton jb_agregarcampo;
     private javax.swing.JButton jb_borrarcampo;
@@ -1036,6 +1046,7 @@ public class Principal extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     private File archivo = null;
     private File archivoBtree = null;
+    private int avail = 0;
     private RandomAccessFile flujo = null;
     private RandomAccessFile flujoBtree = null;
     ArrayList<String> campos = new ArrayList();
