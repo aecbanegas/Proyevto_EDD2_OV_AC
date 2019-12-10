@@ -236,6 +236,11 @@ public class Principal extends javax.swing.JFrame {
 
         jb_introducirregistro.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jb_introducirregistro.setText("Indroducir Registro");
+        jb_introducirregistro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_introducirregistroMouseClicked(evt);
+            }
+        });
 
         jb_modificarregistro.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jb_modificarregistro.setText("Modificar Registro");
@@ -525,6 +530,7 @@ public class Principal extends javax.swing.JFrame {
                 flujo = new RandomAccessFile(archivo, "rw");
                 flujoBtree = new RandomAccessFile(archivoBtree, "rw");
                 try {
+                    avail = flujo.readInt();
                     int cantidad = flujo.readInt();
                     for (int i = 0; i < cantidad; i++) {
                         campos.add(flujo.readUTF());
@@ -532,7 +538,6 @@ public class Principal extends javax.swing.JFrame {
                         sizecampos.add(flujo.readInt());
                         llaveunica.add(flujo.readBoolean());
                     }
-                    avail=flujo.readInt();
                 } catch (Exception e) {
                     System.err.println(e.getMessage());
                     System.out.println("Campos= " + campos.size());
@@ -629,6 +634,7 @@ public class Principal extends javax.swing.JFrame {
         }*/
         if (flujo != null) {
             try {
+                flujo.writeInt(avail);
                 flujo.writeInt(campos.size());
                 for (int i = 0; i < campos.size(); i++) {
                     flujo.writeUTF(campos.get(i));
@@ -636,7 +642,7 @@ public class Principal extends javax.swing.JFrame {
                     flujo.writeInt(sizecampos.get(i));
                     flujo.writeBoolean(llaveunica.get(i));
                 }
-                flujo.writeInt(avail);
+
                 flujo.close();
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
@@ -689,20 +695,20 @@ public class Principal extends javax.swing.JFrame {
                 if (flag) {
                     //Valida que la llave sea unica
                     llaveunica.add(false);
-                } else {                            
-                        int confirmacion = JOptionPane.showConfirmDialog(null, "El campo es una llave?", null, JOptionPane.YES_NO_OPTION);
-                        if (confirmacion == JOptionPane.YES_OPTION) {
-                            llaveunica.add(true);
-                        } else if (confirmacion == JOptionPane.NO_OPTION) {
-                            llaveunica.add(false);
-                        }                            
+                } else {
+                    int confirmacion = JOptionPane.showConfirmDialog(null, "El campo es una llave?", null, JOptionPane.YES_NO_OPTION);
+                    if (confirmacion == JOptionPane.YES_OPTION) {
+                        llaveunica.add(true);
+                    } else if (confirmacion == JOptionPane.NO_OPTION) {
+                        llaveunica.add(false);
+                    }
                 }
             } else if (tipo.equals("double") || tipo.equals("boolean")) {
                 llaveunica.add(false);
-            }else{                 
+            } else {
                 while (size < 1 || size > 15) {
-                    try {                                  
-                            size = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el tamaño del campo entre 1-15:"));
+                    try {
+                        size = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el tamaño del campo entre 1-15:"));
 
                     } catch (Exception e) {
                         size = -1;
@@ -712,7 +718,7 @@ public class Principal extends javax.swing.JFrame {
                     }
                 }
                 llaveunica.add(false);
-            }                        
+            }
             campos.add(campo);
             tiposcampos.add(tipo);
             sizecampos.add(size);
@@ -786,7 +792,7 @@ public class Principal extends javax.swing.JFrame {
             int size = -1;
             while (size < 1 || size > 15) {
                 try {
-                    if (tipo.equals("int") || tipo.equals("double")||tipo.equals("boolean")) {
+                    if (tipo.equals("int") || tipo.equals("double") || tipo.equals("boolean")) {
 
                     } else {
                         size = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el tamaño del campo entre 1-15:"));
@@ -817,7 +823,7 @@ public class Principal extends javax.swing.JFrame {
             }
             if (flag) {
                 //Valida que la llave sea unica
-            } else if (flag==false&&tipo.equals("int")){
+            } else if (flag == false && tipo.equals("int")) {
                 int confirmacion = JOptionPane.showConfirmDialog(null, "El campo es una llave?", null, JOptionPane.YES_NO_OPTION);
                 if (confirmacion == JOptionPane.YES_OPTION) {
                     llaveunica.remove(opc);
@@ -951,6 +957,7 @@ public class Principal extends javax.swing.JFrame {
         }*/
         if (flujo != null) {
             try {
+                flujo.writeInt(avail);
                 flujo.writeInt(campos.size());
                 for (int i = 0; i < campos.size(); i++) {
                     flujo.writeUTF(campos.get(i));
@@ -958,7 +965,7 @@ public class Principal extends javax.swing.JFrame {
                     flujo.writeInt(sizecampos.get(i));
                     flujo.writeBoolean(llaveunica.get(i));
                 }
-                flujo.writeInt(avail);
+
                 flujo.close();
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
@@ -986,6 +993,7 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (flujo != null) {
             try {
+                flujo.writeInt(avail);
                 flujo.writeInt(campos.size());
                 for (int i = 0; i < campos.size(); i++) {
                     flujo.writeUTF(campos.get(i));
@@ -993,7 +1001,7 @@ public class Principal extends javax.swing.JFrame {
                     flujo.writeInt(sizecampos.get(i));
                     flujo.writeBoolean(llaveunica.get(i));
                 }
-                flujo.writeInt(avail);
+
                 flujo.close();
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
@@ -1014,6 +1022,7 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (flujo != null) {
             try {
+                flujo.writeInt(avail);
                 flujo.writeInt(campos.size());
                 for (int i = 0; i < campos.size(); i++) {
                     flujo.writeUTF(campos.get(i));
@@ -1021,7 +1030,7 @@ public class Principal extends javax.swing.JFrame {
                     flujo.writeInt(sizecampos.get(i));
                     flujo.writeBoolean(llaveunica.get(i));
                 }
-                flujo.writeInt(avail);
+
                 flujo.close();
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
@@ -1039,13 +1048,13 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jm_exitsaveMouseClicked
 
     private void jm_registroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_registroActionPerformed
-        String[] titulo=new String[campos.size()];
+        String[] titulo = new String[campos.size()];
         for (int i = 0; i < campos.size(); i++) {
-            titulo[i]=campos.get(i);
+            titulo[i] = campos.get(i);
         }
         jt_registros.setModel(new javax.swing.table.DefaultTableModel(
-                    new Object[][]{},
-                    titulo
+                new Object[][]{},
+                titulo
         ));
         jd_Registro.setModal(true);
         jd_Registro.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -1056,21 +1065,111 @@ public class Principal extends javax.swing.JFrame {
 
     private void jb_salirregistroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_salirregistroMouseClicked
         // TODO add your handling code here:
+        jt_registros.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                new String[]{}
+        ));
         jd_Registro.dispose();
     }//GEN-LAST:event_jb_salirregistroMouseClicked
 
-    public boolean archivoResgistros(){
-        try {            
-            if (flujo.length()>500) {
+    private void jb_introducirregistroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_introducirregistroMouseClicked
+        // TODO add your handling code here:
+        //crear datos
+        ArrayList<Object> camposregistro = new ArrayList();
+        String auxiliar = "";
+        for (int i = 0; i < tiposcampos.size(); i++) {
+            switch (tiposcampos.get(i)) {
+                case "String":
+                    try {
+                        String dato = JOptionPane.showInputDialog("Ingrese la informacion para " + campos.get(i));
+
+                        if (dato.length() != sizecampos.get(i)) {
+                            if (dato.length() < sizecampos.get(i)) {
+                                for (int j = dato.length(); j < sizecampos.get(i); j++) {
+                                    dato += "|";
+                                }
+                            } else {
+                                auxiliar = "";
+                                for (int j = 0; j < sizecampos.get(i); j++) {
+                                    auxiliar += dato.charAt(j);
+                                }
+                                dato = auxiliar;
+                            }
+                        }
+                        camposregistro.add(dato);
+                    } catch (Exception e) {
+                        i--;
+                    }
+                    break;
+                case "boolean":
+                    try {
+                        int confirmacion = JOptionPane.showConfirmDialog(null, "El campo es un " + campos.get(i) + " ?", null, JOptionPane.YES_NO_OPTION);
+                        if (confirmacion == JOptionPane.YES_OPTION) {
+                            camposregistro.add(true);
+                        } else if (confirmacion == JOptionPane.NO_OPTION) {
+                            camposregistro.add(false);
+                        }
+                    } catch (Exception e) {
+                        i--;
+                    }
+                    break;
+                case "double":
+                    try {
+                        double dato = Double.parseDouble(JOptionPane.showInputDialog("Ingrese la informacion tipo double del campo " + campos.get(i) + ":"));
+                        camposregistro.add(dato);
+                    } catch (Exception e) {
+                        i--;
+                    }
+                    break;
+                case "int":
+                    try {
+                        int dato = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la informacion tipo int del campo " + campos.get(i) + ":"));
+                        camposregistro.add(dato);
+                    } catch (Exception e) {
+                        i--;
+                    }
+                    break;
+            }
+        }
+        if (avail==-1) {
+            int pos=0;
+            for (int i = 0; i < llaveunica.size(); i++) {
+                if (llaveunica.get(i)) {
+                    pos=i;
+                    break;
+                }
+            }
+            Registro r=new Registro((int)camposregistro.get(pos));
+            long cantidadregistros=0;
+            try {
+                cantidadregistros=(flujo.length()-metainf)/regsize;
+            } catch (IOException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            r.setRRN(cantidadregistros+1);
+            arbol.insert(r);            
+            for (int i = 0; i < camposregistro.size(); i++) {
+                
+            }
+        }else{
+        
+        }
+        
+    }//GEN-LAST:event_jb_introducirregistroMouseClicked
+
+    public boolean archivoResgistros() {
+        try {
+            if (flujo.length() > 500) {
                 return false;//Contiene registros por lo que no se modificaran campos
-            }else{
+            } else {
                 return true;//No contiene registros
-            }            
+            }
         } catch (IOException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
+
     /**
      * @param args the command line arguments
      */
@@ -1157,7 +1256,7 @@ public class Principal extends javax.swing.JFrame {
     ArrayList<String> tiposcampos = new ArrayList();
     ArrayList<Integer> sizecampos = new ArrayList();
     ArrayList<Boolean> llaveunica = new ArrayList();
-    long metainf=500;
+    long metainf = 500;
     long regsize;
     private BTree arbol;
 }
