@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -54,11 +56,14 @@ public class Principal extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        jb_introducirregistro = new javax.swing.JButton();
+        jb_modificarregistro = new javax.swing.JButton();
+        jblistarregistro = new javax.swing.JButton();
+        jb_buscarregistro = new javax.swing.JButton();
+        jb_borrarregistro = new javax.swing.JButton();
+        jb_salirregistro = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jt_registros = new javax.swing.JTable();
         jd_Estandarizacion = new javax.swing.JDialog();
         jLabel3 = new javax.swing.JLabel();
         jButton11 = new javax.swing.JButton();
@@ -155,6 +160,12 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setHeaderValue("Nombre");
+            jTable1.getColumnModel().getColumn(1).setHeaderValue("Tipo");
+            jTable1.getColumnModel().getColumn(2).setHeaderValue("Tamaño");
+            jTable1.getColumnModel().getColumn(3).setHeaderValue("Llave Unica");
+        }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -223,20 +234,39 @@ public class Principal extends javax.swing.JFrame {
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Menu Registros");
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jButton1.setText("Indroducir Registro");
+        jb_introducirregistro.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jb_introducirregistro.setText("Indroducir Registro");
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jButton2.setText("Modificar Registro");
+        jb_modificarregistro.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jb_modificarregistro.setText("Modificar Registro");
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jButton3.setText("Listar Registro");
+        jblistarregistro.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jblistarregistro.setText("Listar Registro");
 
-        jButton4.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jButton4.setText("Buscar Registro");
+        jb_buscarregistro.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jb_buscarregistro.setText("Buscar Registro");
 
-        jButton5.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jButton5.setText("Borrar Registro");
+        jb_borrarregistro.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jb_borrarregistro.setText("Borrar Registro");
+
+        jb_salirregistro.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jb_salirregistro.setText("Salir Registro");
+        jb_salirregistro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_salirregistroMouseClicked(evt);
+            }
+        });
+
+        jt_registros.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jt_registros.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane2.setViewportView(jt_registros);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -245,13 +275,16 @@ public class Principal extends javax.swing.JFrame {
             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
             .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(26, 26, 26)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jb_salirregistro, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_buscarregistro, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jblistarregistro, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_borrarregistro, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_modificarregistro, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_introducirregistro, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(77, 77, 77))
         );
         jPanel3Layout.setVerticalGroup(
@@ -261,17 +294,22 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(76, 76, 76)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(87, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jb_introducirregistro, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jb_modificarregistro, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jblistarregistro, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jb_borrarregistro, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jb_buscarregistro, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jb_salirregistro, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jd_RegistroLayout = new javax.swing.GroupLayout(jd_Registro.getContentPane());
@@ -494,6 +532,7 @@ public class Principal extends javax.swing.JFrame {
                         sizecampos.add(flujo.readInt());
                         llaveunica.add(flujo.readBoolean());
                     }
+                    avail=flujo.readInt();
                 } catch (Exception e) {
                     System.err.println(e.getMessage());
                     System.out.println("Campos= " + campos.size());
@@ -597,7 +636,7 @@ public class Principal extends javax.swing.JFrame {
                     flujo.writeInt(sizecampos.get(i));
                     flujo.writeBoolean(llaveunica.get(i));
                 }
-
+                flujo.writeInt(avail);
                 flujo.close();
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
@@ -640,45 +679,40 @@ public class Principal extends javax.swing.JFrame {
                     break;
             }
             int size = -1;
-            while (size < 1 || size > 15) {
-                try {
-                    if (tipo.equals("int")) {
-                        boolean flag = false;
-                        for (int i = 0; i < llaveunica.size(); i++) {
-                            if (llaveunica.get(i) == true) {
-                                flag = true;
-                            }
-                        }
-                        if (flag) {
-                            //Valida que la llave sea unica
-                            llaveunica.add(false);
-                        } else {
-                            if (tipo.equals("boolean")) {
-                                llaveunica.add(false);
-                            } else {
-                                int confirmacion = JOptionPane.showConfirmDialog(null, "El campo es una llave?", null, JOptionPane.YES_NO_OPTION);
-                                if (confirmacion == JOptionPane.YES_OPTION) {
-                                    llaveunica.add(true);
-                                } else if (confirmacion == JOptionPane.NO_OPTION) {
-                                    llaveunica.add(false);
-                                }
-                            }
-                        }
-                    } else if (tipo.equals("double") || tipo.equals("boolean")) {
-
-                    } else {
-                        size = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el tamaño del campo entre 1-15:"));
+            if (tipo.equals("int")) {
+                boolean flag = false;
+                for (int i = 0; i < llaveunica.size(); i++) {
+                    if (llaveunica.get(i) == true) {
+                        flag = true;
                     }
-                } catch (Exception e) {
-                    size = -1;
                 }
-                if (size == -1) {
-                    break;
+                if (flag) {
+                    //Valida que la llave sea unica
+                    llaveunica.add(false);
+                } else {                            
+                        int confirmacion = JOptionPane.showConfirmDialog(null, "El campo es una llave?", null, JOptionPane.YES_NO_OPTION);
+                        if (confirmacion == JOptionPane.YES_OPTION) {
+                            llaveunica.add(true);
+                        } else if (confirmacion == JOptionPane.NO_OPTION) {
+                            llaveunica.add(false);
+                        }                            
                 }
-            }
+            } else if (tipo.equals("double") || tipo.equals("boolean")) {
+                llaveunica.add(false);
+            }else{                 
+                while (size < 1 || size > 15) {
+                    try {                                  
+                            size = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el tamaño del campo entre 1-15:"));
 
-            llaveunica.add(false);
-
+                    } catch (Exception e) {
+                        size = -1;
+                    }
+                    if (size == -1) {
+                        break;
+                    }
+                }
+                llaveunica.add(false);
+            }                        
             campos.add(campo);
             tiposcampos.add(tipo);
             sizecampos.add(size);
@@ -752,7 +786,7 @@ public class Principal extends javax.swing.JFrame {
             int size = -1;
             while (size < 1 || size > 15) {
                 try {
-                    if (tipo.equals("int") || tipo.equals("double")) {
+                    if (tipo.equals("int") || tipo.equals("double")||tipo.equals("boolean")) {
 
                     } else {
                         size = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el tamaño del campo entre 1-15:"));
@@ -783,7 +817,7 @@ public class Principal extends javax.swing.JFrame {
             }
             if (flag) {
                 //Valida que la llave sea unica
-            } else {
+            } else if (flag==false&&tipo.equals("int")){
                 int confirmacion = JOptionPane.showConfirmDialog(null, "El campo es una llave?", null, JOptionPane.YES_NO_OPTION);
                 if (confirmacion == JOptionPane.YES_OPTION) {
                     llaveunica.remove(opc);
@@ -924,7 +958,7 @@ public class Principal extends javax.swing.JFrame {
                     flujo.writeInt(sizecampos.get(i));
                     flujo.writeBoolean(llaveunica.get(i));
                 }
-
+                flujo.writeInt(avail);
                 flujo.close();
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
@@ -959,7 +993,7 @@ public class Principal extends javax.swing.JFrame {
                     flujo.writeInt(sizecampos.get(i));
                     flujo.writeBoolean(llaveunica.get(i));
                 }
-
+                flujo.writeInt(avail);
                 flujo.close();
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
@@ -987,7 +1021,7 @@ public class Principal extends javax.swing.JFrame {
                     flujo.writeInt(sizecampos.get(i));
                     flujo.writeBoolean(llaveunica.get(i));
                 }
-
+                flujo.writeInt(avail);
                 flujo.close();
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
@@ -1005,12 +1039,38 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jm_exitsaveMouseClicked
 
     private void jm_registroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_registroActionPerformed
+        String[] titulo=new String[campos.size()];
+        for (int i = 0; i < campos.size(); i++) {
+            titulo[i]=campos.get(i);
+        }
+        jt_registros.setModel(new javax.swing.table.DefaultTableModel(
+                    new Object[][]{},
+                    titulo
+        ));
         jd_Registro.setModal(true);
+        jd_Registro.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         jd_Registro.pack();
         jd_Registro.setLocationRelativeTo(this);
         jd_Registro.setVisible(true);
     }//GEN-LAST:event_jm_registroActionPerformed
 
+    private void jb_salirregistroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_salirregistroMouseClicked
+        // TODO add your handling code here:
+        jd_Registro.dispose();
+    }//GEN-LAST:event_jb_salirregistroMouseClicked
+
+    public boolean archivoResgistros(){
+        try {            
+            if (flujo.length()>500) {
+                return false;//Contiene registros por lo que no se modificaran campos
+            }else{
+                return true;//No contiene registros
+            }            
+        } catch (IOException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
     /**
      * @param args the command line arguments
      */
@@ -1047,13 +1107,8 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1067,14 +1122,21 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JButton jb_agregarcampo;
     private javax.swing.JButton jb_borrarcampo;
+    private javax.swing.JButton jb_borrarregistro;
+    private javax.swing.JButton jb_buscarregistro;
     private javax.swing.JButton jb_cargararchivo;
+    private javax.swing.JButton jb_introducirregistro;
     private javax.swing.JButton jb_listarcampo;
     private javax.swing.JButton jb_modificarcampo;
+    private javax.swing.JButton jb_modificarregistro;
     private javax.swing.JButton jb_nuevoarchivo;
     private javax.swing.JButton jb_regresarcampos;
+    private javax.swing.JButton jb_salirregistro;
+    private javax.swing.JButton jblistarregistro;
     private javax.swing.JDialog jd_Campos;
     private javax.swing.JDialog jd_Estandarizacion;
     private javax.swing.JDialog jd_Registro;
@@ -1084,14 +1146,18 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jm_exitsave;
     private javax.swing.JMenu jm_guardar;
     private javax.swing.JMenuItem jm_registro;
+    private javax.swing.JTable jt_registros;
     // End of variables declaration//GEN-END:variables
     private File archivo = null;
     private File archivoBtree = null;
-    private int avail = 0;
+    private int avail = -1;
     private RandomAccessFile flujo = null;
     private RandomAccessFile flujoBtree = null;
     ArrayList<String> campos = new ArrayList();
     ArrayList<String> tiposcampos = new ArrayList();
     ArrayList<Integer> sizecampos = new ArrayList();
     ArrayList<Boolean> llaveunica = new ArrayList();
+    long metainf=500;
+    long regsize;
+    private BTree arbol;
 }
