@@ -681,11 +681,11 @@ public class Principal extends javax.swing.JFrame {
                     jm_archivo.setEnabled(true);
                     jm_guardar.setEnabled(true);
                 } else {
-                    JOptionPane.showMessageDialog(this, "NO INGRESO UN NOMBRE VALIDO");
+                    JOptionPane.showMessageDialog(this, "No ingreso un nombre valido. Intente de nuevo.");
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "NO INGRESO NADA");
+            JOptionPane.showMessageDialog(this, "No ingreso un nombre valido. Intente de nuevo.");
         }
     }//GEN-LAST:event_jb_nuevoarchivoMouseClicked
 
@@ -1192,37 +1192,39 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jm_exitsaveMouseClicked
 
     private void jm_registroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_registroActionPerformed
-        regsize = 0;
-        for (int i = 0; i < tiposcampos.size(); i++) {
-            switch (tiposcampos.get(i)) {
-                case "String":
-                    regsize += 2;
-                    regsize += sizecampos.get(i);
-                    break;
-                case "boolean":
-                    regsize++;
-                    break;
-                case "double":
-                    regsize += 8;
-                    break;
-                case "int":
-                    regsize += 4;
-                    break;
+        if (jm_registro.isEnabled()) {
+            regsize = 0;
+            for (int i = 0; i < tiposcampos.size(); i++) {
+                switch (tiposcampos.get(i)) {
+                    case "String":
+                        regsize += 2;
+                        regsize += sizecampos.get(i);
+                        break;
+                    case "boolean":
+                        regsize++;
+                        break;
+                    case "double":
+                        regsize += 8;
+                        break;
+                    case "int":
+                        regsize += 4;
+                        break;
+                }
             }
+            String[] titulo = new String[campos.size()];
+            for (int i = 0; i < campos.size(); i++) {
+                titulo[i] = campos.get(i);
+            }
+            jt_registros.setModel(new javax.swing.table.DefaultTableModel(
+                    new Object[][]{},
+                    titulo
+            ));
+            jd_Registro.setModal(true);
+            jd_Registro.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+            jd_Registro.pack();
+            jd_Registro.setLocationRelativeTo(this);
+            jd_Registro.setVisible(true);
         }
-        String[] titulo = new String[campos.size()];
-        for (int i = 0; i < campos.size(); i++) {
-            titulo[i] = campos.get(i);
-        }
-        jt_registros.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][]{},
-                titulo
-        ));
-        jd_Registro.setModal(true);
-        jd_Registro.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        jd_Registro.pack();
-        jd_Registro.setLocationRelativeTo(this);
-        jd_Registro.setVisible(true);
     }//GEN-LAST:event_jm_registroActionPerformed
 
     private void jb_salirregistroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_salirregistroMouseClicked
@@ -1979,29 +1981,31 @@ public class Principal extends javax.swing.JFrame {
 
     private void jm_estandarizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_estandarizacionActionPerformed
         // TODO add your handling code here:
-        regsize = 0;
-        for (int i = 0; i < tiposcampos.size(); i++) {
-            switch (tiposcampos.get(i)) {
-                case "String":
-                    regsize += 2;
-                    regsize += sizecampos.get(i);
-                    break;
-                case "boolean":
-                    regsize++;
-                    break;
-                case "double":
-                    regsize += 8;
-                    break;
-                case "int":
-                    regsize += 4;
-                    break;
+        if (jm_estandarizacion.isEnabled()) {
+            regsize = 0;
+            for (int i = 0; i < tiposcampos.size(); i++) {
+                switch (tiposcampos.get(i)) {
+                    case "String":
+                        regsize += 2;
+                        regsize += sizecampos.get(i);
+                        break;
+                    case "boolean":
+                        regsize++;
+                        break;
+                    case "double":
+                        regsize += 8;
+                        break;
+                    case "int":
+                        regsize += 4;
+                        break;
+                }
             }
+            jd_Estandarizacion.setModal(true);
+            jd_Estandarizacion.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+            jd_Estandarizacion.pack();
+            jd_Estandarizacion.setLocationRelativeTo(this);
+            jd_Estandarizacion.setVisible(true);
         }
-        jd_Estandarizacion.setModal(true);
-        jd_Estandarizacion.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        jd_Estandarizacion.pack();
-        jd_Estandarizacion.setLocationRelativeTo(this);
-        jd_Estandarizacion.setVisible(true);
     }//GEN-LAST:event_jm_estandarizacionActionPerformed
 
     private void jb_regresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_regresarMouseClicked
