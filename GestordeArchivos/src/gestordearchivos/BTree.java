@@ -39,19 +39,21 @@ public class BTree{
     
     void AllKeys(ArrayList<Registro> registros, Bnode nodo){
         if (nodo.isLeaf()) {
-            for (int i = 0; i < nodo.getKeys().length; i++) {
+            for (int i = 0; i < nodo.getN(); i++) {
                 if (nodo.getKeys()[i]!=null) {
                     registros.add(nodo.getKeys()[i]);
                 }
             }
         }else{
-            for (int i = 0; i < nodo.getKeys().length; i++) {
+            for (int i = 0; i < nodo.getN(); i++) {
                 if (nodo.getKeys()[i]!=null) {
                     registros.add(nodo.getKeys()[i]);
                 }
             }
             for (int i = 0; i < nodo.getHijos().length; i++) {
-                AllKeys(registros,nodo.getHijos()[i]);
+                if (nodo.getHijos()[i]!=null) {
+                    AllKeys(registros,nodo.getHijos()[i]);
+                }                
             }
         }
     }

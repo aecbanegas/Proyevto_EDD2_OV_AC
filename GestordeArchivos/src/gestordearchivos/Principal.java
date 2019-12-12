@@ -21,6 +21,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -69,7 +73,6 @@ public class Principal extends javax.swing.JFrame {
         jb_salirregistro = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jt_registros = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
         jd_Estandarizacion = new javax.swing.JDialog();
         jLabel3 = new javax.swing.JLabel();
         jButton11 = new javax.swing.JButton();
@@ -249,12 +252,27 @@ public class Principal extends javax.swing.JFrame {
 
         jb_modificarregistro.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jb_modificarregistro.setText("Modificar Registro");
+        jb_modificarregistro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_modificarregistroMouseClicked(evt);
+            }
+        });
 
         jblistarregistro.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jblistarregistro.setText("Listar Registro");
+        jblistarregistro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jblistarregistroMouseClicked(evt);
+            }
+        });
 
         jb_buscarregistro.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jb_buscarregistro.setText("Buscar Registro");
+        jb_buscarregistro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_buscarregistroMouseClicked(evt);
+            }
+        });
 
         jb_borrarregistro.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jb_borrarregistro.setText("Borrar Registro");
@@ -278,13 +296,6 @@ public class Principal extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(jt_registros);
 
-        jButton2.setText("jButton1");
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton2MouseClicked(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -303,19 +314,13 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(jb_modificarregistro, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jb_introducirregistro, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(55, 55, 55))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(46, 46, 46)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -1190,8 +1195,23 @@ public class Principal extends javax.swing.JFrame {
     private void jb_introducirregistroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_introducirregistroMouseClicked
         // TODO add your handling code here:
         //crear datos
+        String[] titulo = new String[campos.size()];
+        for (int i = 0; i < campos.size(); i++) {
+            titulo[i] = campos.get(i);
+        }
+        jt_registros.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                titulo
+        ));
         ArrayList<Object> camposregistro = new ArrayList();
         String auxiliar = "";
+        int posllave=0;
+        for (int i = 0; i < llaveunica.size(); i++) {
+            if (llaveunica.get(i)) {
+                posllave=i;
+                break;
+            }
+        }
         for (int i = 0; i < tiposcampos.size(); i++) {
             switch (tiposcampos.get(i)) {
                 case "String":
@@ -1237,11 +1257,27 @@ public class Principal extends javax.swing.JFrame {
                     }
                     break;
                 case "int":
-                    try {
-                        int dato = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la informacion tipo int del campo " + campos.get(i) + ":"));
-                        camposregistro.add(dato);
-                    } catch (Exception e) {
-                        i--;
+                    if (i==posllave) {
+                        boolean flag1=true;
+                        while(flag1){
+                            try {
+                                int dato = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la informacion tipo int del campo " + campos.get(i) + ":"));
+                                Registro tmp=new Registro(dato);
+                                Bnode nodo=arbol.search(tmp);
+                                if (nodo==null) {
+                                    flag1=false;
+                                    camposregistro.add(dato);
+                                }
+                            } catch (Exception e) {                                
+                            }
+                        }
+                    }else{
+                        try {
+                            int dato = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la informacion tipo int del campo " + campos.get(i) + ":"));
+                            camposregistro.add(dato);
+                        } catch (Exception e) {
+                            i--;
+                        }
                     }
                     break;
             }
@@ -1271,7 +1307,18 @@ public class Principal extends javax.swing.JFrame {
             arbol.insert(r);
             Object[] linea = new String[camposregistro.size()];
             for (int i = 0; i < camposregistro.size(); i++) {
-                linea[i] = camposregistro.get(i).toString();
+                if (tiposcampos.get(i).equals("String")) {
+                    String momento=camposregistro.get(i).toString();
+                    String aux="";
+                    for (int k = 0; k < momento.length(); k++) {
+                        if (!(momento.charAt(k)=='|')) {
+                            aux+=momento.charAt(k);
+                        }
+                    }
+                    linea[i]=aux;
+                }else{
+                    linea[i] = camposregistro.get(i).toString();
+                }
             }
             DefaultTableModel modelo = (DefaultTableModel) jt_registros.getModel();
             modelo.addRow(linea);
@@ -1332,15 +1379,342 @@ public class Principal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton12MouseClicked
 
-    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        jd_Estandarizacion.setModal(true);
-        jd_Estandarizacion.pack();
-        jd_Estandarizacion.setLocationRelativeTo(this);
-        jd_Estandarizacion.setVisible(true);
-    }//GEN-LAST:event_jButton2MouseClicked
-
     private void jButton11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton11MouseClicked
-    
+        if (archivo.exists()) {
+            DefaultTableModel modelo = (DefaultTableModel) jt_registros.getModel();
+            //modelo.addRow(linea);
+            
+            jt_registros.setModel(modelo);
+            Metadata metadata=new Metadata();
+            metadata.setCampos(campos);
+            metadata.setTipos(tiposcampos);
+            metadata.setSizeMeta((int)metainf);
+            ExportToExcel(metadata,archivo.getName(), jt_registros);
+        }
+    }//GEN-LAST:event_jButton11MouseClicked
+
+    private void jblistarregistroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblistarregistroMouseClicked
+        // TODO add your handling code here:
+        String[] titulo = new String[campos.size()];
+        for (int i = 0; i < campos.size(); i++) {
+            titulo[i] = campos.get(i);
+        }
+        jt_registros.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                titulo
+        ));
+        boolean flag=true;
+        int PrimeKey=0;
+        while(flag){
+            try {
+                PrimeKey=Integer.parseInt(JOptionPane.showInputDialog("Ingrese la llave primaria del registro que busca: "));
+                Registro r=new Registro(PrimeKey);
+                Bnode nodo=arbol.search(r);
+                if (nodo!=null) {
+                    DefaultTableModel modelo = (DefaultTableModel) jt_registros.getModel();
+                    //modelo.addRow(linea);
+                    Object[] linea;
+                    for (int i = 0; i < nodo.getN(); i++) {
+                        linea = new String[campos.size()];
+                        if (nodo.getKeys()[i]!=null) {
+                            long rrn=nodo.getKeys()[i].getRRN();
+                            try {
+                                flujo.seek(metainf+((rrn-1)*regsize));
+                                for (int j = 0; j < campos.size(); j++) {
+                                    switch (tiposcampos.get(j)) {
+                                        case "String":
+                                            String momento=flujo.readUTF();
+                                            String aux="";
+                                            for (int k = 0; k < momento.length(); k++) {
+                                                if (!(momento.charAt(k)=='|')) {
+                                                    aux+=momento.charAt(k);
+                                                }
+                                            }
+                                            linea[j]=aux;
+                                            break;
+                                        case "boolean":
+                                            linea[j]=Boolean.toString(flujo.readBoolean());
+                                            break;
+                                        case "double":
+                                            linea[j]=Double.toString(flujo.readDouble());
+                                            break;
+                                        case "int":
+                                            int n=flujo.readInt();
+                                            linea[j]=Integer.toString(n);
+                                            break;
+                                    }
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            System.out.println(linea);
+                            modelo.addRow(linea);
+                        }                        
+                    }
+                    flag=false;
+                    jt_registros.setModel(modelo);                    
+                }else{
+                    flag=false;
+                    JOptionPane.showMessageDialog(jd_Registro, "No existe el registro! Intente nuevamente.");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_jblistarregistroMouseClicked
+
+    private void jb_buscarregistroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_buscarregistroMouseClicked
+        // TODO add your handling code here:
+        String[] titulo = new String[campos.size()];
+        for (int i = 0; i < campos.size(); i++) {
+            titulo[i] = campos.get(i);
+        }
+        jt_registros.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                titulo
+        ));
+        boolean flag=true;
+        int PrimeKey=0;
+        while(flag){
+            try {
+                PrimeKey=Integer.parseInt(JOptionPane.showInputDialog("Ingrese la llave primaria del registro que busca: "));
+                Registro r=new Registro(PrimeKey);
+                Bnode nodo=arbol.search(r);
+                if (nodo!=null) {
+                    DefaultTableModel modelo = (DefaultTableModel) jt_registros.getModel();
+                    //modelo.addRow(linea);
+                    Object[] linea;
+                    for (int i = 0; i < nodo.getN(); i++) {
+                        linea = new String[campos.size()];
+                        if (nodo.getKeys()[i]!=null&&nodo.getKeys()[i].getKey()==r.getKey()) {
+                            long rrn=nodo.getKeys()[i].getRRN();
+                            try {
+                                flujo.seek(metainf+((rrn-1)*regsize));
+                                for (int j = 0; j < campos.size(); j++) {
+                                    switch (tiposcampos.get(j)) {
+                                        case "String":
+                                            String momento=flujo.readUTF();
+                                            String aux="";
+                                            for (int k = 0; k < momento.length(); k++) {
+                                                if (!(momento.charAt(k)=='|')) {
+                                                    aux+=momento.charAt(k);
+                                                }
+                                            }
+                                            linea[j]=aux;
+                                            break;
+                                        case "boolean":
+                                            linea[j]=Boolean.toString(flujo.readBoolean());
+                                            break;
+                                        case "double":
+                                            linea[j]=Double.toString(flujo.readDouble());
+                                            break;
+                                        case "int":
+                                            int n=flujo.readInt();
+                                            linea[j]=Integer.toString(n);
+                                            break;
+                                    }
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            System.out.println(linea);
+                            modelo.addRow(linea);
+                        }                        
+                    }
+                    flag=false;
+                    jt_registros.setModel(modelo);                    
+                }else{
+                    flag=false;
+                    JOptionPane.showMessageDialog(jd_Registro, "No existe el registro buscado! Intente de nuevo!");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_jb_buscarregistroMouseClicked
+
+    private void jb_modificarregistroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_modificarregistroMouseClicked
+        // TODO add your handling code here:
+        String[] titulo = new String[campos.size()];
+        for (int i = 0; i < campos.size(); i++) {
+            titulo[i] = campos.get(i);
+        }
+        jt_registros.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                titulo
+        ));
+        boolean flag=true;
+        ArrayList<Object> camposregistro = new ArrayList();
+        String auxiliar = "";
+        int posllave=0;
+        for (int i = 0; i < llaveunica.size(); i++) {
+            if (llaveunica.get(i)) {
+                posllave=i;
+                break;
+            }
+        }
+        int PrimeKey=0;
+        while(flag){
+            try {
+                PrimeKey=Integer.parseInt(JOptionPane.showInputDialog("Ingrese la llave primaria del registro que busca: "));
+                Registro r=new Registro(PrimeKey);
+                Bnode nodo=arbol.search(r);
+                if (nodo!=null) {
+                    DefaultTableModel modelo = (DefaultTableModel) jt_registros.getModel();
+                    //modelo.addRow(linea);
+                    Object[] linea;
+                    for (int i = 0; i < nodo.getN(); i++) {
+                        linea = new String[campos.size()];
+                        if (nodo.getKeys()[i]!=null&&nodo.getKeys()[i].getKey()==r.getKey()) {
+                            long rrn=nodo.getKeys()[i].getRRN();
+                            try {
+                                flujo.seek(metainf+((rrn-1)*regsize));
+                                for (int j = 0; j < campos.size(); j++) {
+                                    if (j==posllave) {
+                                        int n=flujo.readInt();
+                                        linea[j]=Integer.toString(n);
+                                    }else{
+                                        switch (tiposcampos.get(j)) {
+                                            case "String":
+                                                String momento=flujo.readUTF();
+                                                String aux="";
+                                                for (int k = 0; k < momento.length(); k++) {
+                                                    if (!(momento.charAt(k)=='|')) {
+                                                        aux+=momento.charAt(k);
+                                                    }
+                                                }
+                                                linea[j]=aux;
+                                                break;
+                                            case "boolean":
+                                                linea[j]=Boolean.toString(flujo.readBoolean());
+                                                break;
+                                            case "double":
+                                                linea[j]=Double.toString(flujo.readDouble());
+                                                break;
+                                            case "int":
+                                                int n=flujo.readInt();
+                                                linea[j]=Integer.toString(n);
+                                                break;
+                                        }
+                                    }
+                                }
+                                /*AQUI*/
+                                for (int k = 0; k < tiposcampos.size(); k++) {
+                                    switch (tiposcampos.get(k)) {
+                                        case "String":
+                                            try {
+                                                String dato = JOptionPane.showInputDialog("Ingrese la informacion para " + campos.get(k));
+
+                                                if (dato.length() != sizecampos.get(k)) {
+                                                    if (dato.length() < sizecampos.get(k)) {
+                                                        for (int j = dato.length(); j < sizecampos.get(k); j++) {
+                                                            dato += "|";
+                                                        }
+                                                    } else {
+                                                        auxiliar = "";
+                                                        for (int j = 0; j < sizecampos.get(k); j++) {
+                                                            auxiliar += dato.charAt(j);
+                                                        }
+                                                        dato = auxiliar;
+                                                    }
+                                                }
+                                                camposregistro.add(dato);
+                                            } catch (Exception e) {
+                                                k--;
+                                            }
+                                            break;
+                                        case "boolean":
+                                            try {
+                                                int confirmacion = JOptionPane.showConfirmDialog(null, "El campo es un " + campos.get(k) + " ?", null, JOptionPane.YES_NO_OPTION);
+                                                if (confirmacion == JOptionPane.YES_OPTION) {
+                                                    camposregistro.add(true);
+                                                } else if (confirmacion == JOptionPane.NO_OPTION) {
+                                                    camposregistro.add(false);
+                                                }
+                                            } catch (Exception e) {
+                                                k--;
+                                            }
+                                            break;
+                                        case "double":
+                                            try {
+                                                double dato = Double.parseDouble(JOptionPane.showInputDialog("Ingrese la informacion tipo double del campo " + campos.get(k) + ":"));
+                                                camposregistro.add(dato);
+                                            } catch (Exception e) {
+                                                k--;
+                                            }
+                                            break;
+                                        case "int":
+                                            if (k==posllave) {                                                
+                                                camposregistro.add(Integer.parseInt(linea[k].toString()));                                              
+                                            }else{
+                                                try {
+                                                    int dato = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la informacion tipo int del campo " + campos.get(k) + ":"));
+                                                    camposregistro.add(dato);
+                                                } catch (Exception e) {
+                                                    k--;
+                                                }
+                                            }
+                                            break;
+                                    }
+                                }
+                                try {
+                                    flujo.seek(metainf+((rrn-1)*regsize));
+                                    for (int k = 0; k < tiposcampos.size(); k++) {
+                                        switch (tiposcampos.get(k)) {
+                                            case "String":
+                                                linea[k]=camposregistro.get(k).toString();
+                                                flujo.writeUTF((String) camposregistro.get(k));
+                                                break;
+                                            case "boolean":
+                                                linea[k]=camposregistro.get(k).toString();
+                                                flujo.writeBoolean((Boolean) camposregistro.get(k));
+                                                break;
+                                            case "double":
+                                                linea[k]=camposregistro.get(k).toString();
+                                                flujo.writeDouble((Double) camposregistro.get(k));
+                                                break;
+                                            case "int":
+                                                linea[k]=camposregistro.get(k).toString();
+                                                flujo.writeInt((Integer) camposregistro.get(k));
+                                                break;
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                }
+                                for (int k = 0; k < camposregistro.size(); k++) {
+                                    if (tiposcampos.get(k).equals("String")) {
+                                        String momento=camposregistro.get(k).toString();
+                                        String aux="";
+                                        for (int j = 0; j < momento.length(); j++) {
+                                            if (!(momento.charAt(j)=='|')) {
+                                                aux+=momento.charAt(j);
+                                            }
+                                        }
+                                        linea[k]=aux;
+                                    }else{
+                                        linea[k] = camposregistro.get(k).toString();
+                                    }
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            System.out.println(linea);
+                            modelo.addRow(linea);
+                        }                        
+                    }
+                    flag=false;
+                    jt_registros.setModel(modelo);                    
+                }else{
+                    flag=false;
+                    JOptionPane.showMessageDialog(jd_Registro, "No existe el registro buscado! Intente de nuevo!");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_jb_modificarregistroMouseClicked
+
+    public void ExportToExcel(Metadata metadata, String name, JTable table) {   
         //Blank workbook
         XSSFWorkbook workbook = new XSSFWorkbook();
 
@@ -1393,9 +1767,8 @@ public class Principal extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
     
-    }//GEN-LAST:event_jButton11MouseClicked
-
     public boolean archivoResgistros() {
         try {
             if (flujo.length() > 500) {
@@ -1447,7 +1820,6 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
