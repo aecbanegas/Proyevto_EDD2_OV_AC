@@ -575,9 +575,9 @@
               <Component id="jLabel1" alignment="0" pref="1000" max="32767" attributes="0"/>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="428" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jb_nuevoarchivo" min="-2" pref="123" max="-2" attributes="0"/>
-                      <Component id="jb_cargararchivo" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="jb_nuevoarchivo" pref="123" max="32767" attributes="0"/>
+                      <Component id="jb_cargararchivo" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>

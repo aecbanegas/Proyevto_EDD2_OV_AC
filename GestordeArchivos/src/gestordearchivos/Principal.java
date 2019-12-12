@@ -399,9 +399,9 @@ public class Principal extends javax.swing.JFrame {
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(428, 428, 428)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jb_nuevoarchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jb_cargararchivo))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jb_nuevoarchivo, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
+                    .addComponent(jb_cargararchivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -649,6 +649,8 @@ public class Principal extends javax.swing.JFrame {
         }*/
         if (flujo != null) {
             try {
+                System.out.println("Guardando avail: "+avail);
+                flujo.seek(0);
                 flujo.writeInt(avail);
                 flujo.writeInt(campos.size());
                 for (int i = 0; i < campos.size(); i++) {
@@ -985,6 +987,7 @@ public class Principal extends javax.swing.JFrame {
             System.out.println("entro dog");
             try {
                 flujo.seek(0);
+                System.out.println("Guardando avail: "+avail);
                 flujo.writeInt(avail);
                 flujo.writeInt(campos.size());
                 for (int i = 0; i < campos.size(); i++) {
@@ -1036,6 +1039,7 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (flujo != null) {
             try {
+                System.out.println("Guardando avail: "+avail);
                 flujo.seek(0);
                 flujo.writeInt(avail);
                 flujo.writeInt(campos.size());
@@ -1077,6 +1081,8 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (flujo != null) {
             try {
+                System.out.println("Guardando avail: "+avail);
+                flujo.seek(0);
                 flujo.writeInt(avail);
                 flujo.writeInt(campos.size());
                 for (int i = 0; i < campos.size(); i++) {
@@ -1233,7 +1239,11 @@ public class Principal extends javax.swing.JFrame {
             } catch (IOException ex) {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             }
-            r.setRRN(cantidadregistros+1);
+            if (cantidadregistros<1) {
+                r.setRRN(1);
+            }else{
+                r.setRRN(cantidadregistros+1);
+            }
             arbol.insert(r);        
             Object[] linea= new String[camposregistro.size()];
             for (int i = 0; i < camposregistro.size(); i++) {
