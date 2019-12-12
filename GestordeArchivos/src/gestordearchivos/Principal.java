@@ -534,7 +534,9 @@ public class Principal extends javax.swing.JFrame {
                 flujoBtree = new RandomAccessFile(archivoBtree, "rw");
                 arbol=new BTree();
                 try {
+          
                     avail = flujo.readInt();
+                    
                     System.out.println("Avail "+avail);
                     int cantidad = flujo.readInt();
                     for (int i = 0; i < cantidad; i++) {
@@ -980,7 +982,9 @@ public class Principal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Se ha guardado el archivo de manera satisfactoria!\nSe ha procedido a cerrarlo!");
         }*/
         if (flujo != null) {
+            System.out.println("entro dog");
             try {
+                flujo.seek(0);
                 flujo.writeInt(avail);
                 flujo.writeInt(campos.size());
                 for (int i = 0; i < campos.size(); i++) {
@@ -1032,6 +1036,7 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (flujo != null) {
             try {
+                flujo.seek(0);
                 flujo.writeInt(avail);
                 flujo.writeInt(campos.size());
                 for (int i = 0; i < campos.size(); i++) {
@@ -1211,7 +1216,9 @@ public class Principal extends javax.swing.JFrame {
                     break;
             }
         }
+        
         if (avail==-1) {
+            System.out.println("entro");
             int pos=0;
             for (int i = 0; i < llaveunica.size(); i++) {
                 if (llaveunica.get(i)) {
@@ -1236,6 +1243,7 @@ public class Principal extends javax.swing.JFrame {
             modelo.addRow(linea);
             jt_registros.setModel(modelo);
             if (cantidadregistros<1) {
+                System.out.println("entro");
                 try {
                     flujo.seek(metainf);
                     for (int i = 0; i < tiposcampos.size(); i++) {
@@ -1258,6 +1266,7 @@ public class Principal extends javax.swing.JFrame {
                     Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }else{
+                System.out.println("entro1");
                 try {
                     flujo.seek(metainf+(cantidadregistros)*regsize);
                     for (int i = 0; i < tiposcampos.size(); i++) {
