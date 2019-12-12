@@ -38,6 +38,6 @@ public class Registro implements Serializable{
     
     @Override
     public String toString() {
-        return key +"-";
+        return key +"-"+RRN;
     }
 }

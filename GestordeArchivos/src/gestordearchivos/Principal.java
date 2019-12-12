@@ -290,7 +290,7 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(jb_borrarregistro, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jb_modificarregistro, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jb_introducirregistro, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(77, 77, 77))
+                .addGap(55, 55, 55))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -299,9 +299,9 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
                         .addComponent(jb_introducirregistro, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jb_modificarregistro, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -313,8 +313,10 @@ public class Principal extends javax.swing.JFrame {
                         .addComponent(jb_buscarregistro, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jb_salirregistro, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(14, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jd_RegistroLayout = new javax.swing.GroupLayout(jd_Registro.getContentPane());
@@ -502,6 +504,7 @@ public class Principal extends javax.swing.JFrame {
             // TODO add your handling code here:
             if (flujo != null) {
                 flujo.close();
+                flujoBtree.close();
             }
         } catch (IOException ex) {
         }
@@ -529,14 +532,23 @@ public class Principal extends javax.swing.JFrame {
                 archivoBtree = new File("./" + pathbt + "ovacbt");
                 flujo = new RandomAccessFile(archivo, "rw");
                 flujoBtree = new RandomAccessFile(archivoBtree, "rw");
+                arbol=new BTree();
                 try {
                     avail = flujo.readInt();
+                    System.out.println("Avail "+avail);
                     int cantidad = flujo.readInt();
                     for (int i = 0; i < cantidad; i++) {
                         campos.add(flujo.readUTF());
                         tiposcampos.add(flujo.readUTF());
                         sizecampos.add(flujo.readInt());
                         llaveunica.add(flujo.readBoolean());
+                    }
+                    cantllaves=flujoBtree.readInt();
+                    for (int i = 0; i < cantllaves; i++) {
+                        Registro r=new Registro(flujoBtree.readInt());//Lee la llave
+                        r.setRRN(flujoBtree.readLong());//lee la RRN
+                        arbol.insert(r);
+                        
                     }
                 } catch (Exception e) {
                     System.err.println(e.getMessage());
@@ -574,6 +586,7 @@ public class Principal extends javax.swing.JFrame {
                 if (path.length() != 0) {
                     archivo = new File("./" + path + ".ovac");
                     archivoBtree = new File("./" + path + ".ovacbt");
+                    arbol=new BTree();
                     while (archivo.exists()) {
                         path = JOptionPane.showInputDialog("Ingrese el nombre del archivo: \n***Asegurese de que no existe un archivo con el mismo nombre***");
                         archivo = new File("./" + path + ".ovac");
@@ -642,7 +655,18 @@ public class Principal extends javax.swing.JFrame {
                     flujo.writeInt(sizecampos.get(i));
                     flujo.writeBoolean(llaveunica.get(i));
                 }
-
+                archivoBtree.delete();
+                archivoBtree.createNewFile();
+                flujoBtree.close();
+                flujoBtree=new RandomAccessFile(archivoBtree, "rw");
+                ArrayList<Registro> registros;
+                registros=arbol.llaves();
+                flujoBtree.writeInt(registros.size());
+                for (int i = 0; i < registros.size(); i++) {
+                    flujoBtree.writeInt(registros.get(i).getKey());
+                    flujoBtree.writeLong(registros.get(i).getRRN());
+                }
+                flujoBtree.close();
                 flujo.close();
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
@@ -965,7 +989,18 @@ public class Principal extends javax.swing.JFrame {
                     flujo.writeInt(sizecampos.get(i));
                     flujo.writeBoolean(llaveunica.get(i));
                 }
-
+                archivoBtree.delete();
+                archivoBtree.createNewFile();
+                flujoBtree.close();
+                flujoBtree=new RandomAccessFile(archivoBtree, "rw");
+                ArrayList<Registro> registros;
+                registros=arbol.llaves();
+                flujoBtree.writeInt(registros.size());
+                for (int i = 0; i < registros.size(); i++) {
+                    flujoBtree.writeInt(registros.get(i).getKey());
+                    flujoBtree.writeLong(registros.get(i).getRRN());
+                }
+                flujoBtree.close();
                 flujo.close();
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
@@ -983,10 +1018,14 @@ public class Principal extends javax.swing.JFrame {
 
     private void jm_camposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_camposActionPerformed
         // TODO add your handling code here:
-        jd_Campos.setModal(true);
-        jd_Campos.pack();
-        jd_Campos.setLocationRelativeTo(this);
-        jd_Campos.setVisible(true);
+        if (archivoResgistros()) {
+            jd_Campos.setModal(true);
+            jd_Campos.pack();
+            jd_Campos.setLocationRelativeTo(this);
+            jd_Campos.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "El archivo ya contiene registros por lo que no se permite modificar campos!");
+        }
     }//GEN-LAST:event_jm_camposActionPerformed
 
     private void jm_exitsaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_exitsaveActionPerformed
@@ -1001,7 +1040,18 @@ public class Principal extends javax.swing.JFrame {
                     flujo.writeInt(sizecampos.get(i));
                     flujo.writeBoolean(llaveunica.get(i));
                 }
-
+                archivoBtree.delete();
+                archivoBtree.createNewFile();
+                flujoBtree.close();
+                flujoBtree=new RandomAccessFile(archivoBtree, "rw");
+                ArrayList<Registro> registros;
+                registros=arbol.llaves();
+                flujoBtree.writeInt(registros.size());
+                for (int i = 0; i < registros.size(); i++) {
+                    flujoBtree.writeInt(registros.get(i).getKey());
+                    flujoBtree.writeLong(registros.get(i).getRRN());
+                }
+                flujoBtree.close();
                 flujo.close();
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
@@ -1030,7 +1080,19 @@ public class Principal extends javax.swing.JFrame {
                     flujo.writeInt(sizecampos.get(i));
                     flujo.writeBoolean(llaveunica.get(i));
                 }
-
+                archivoBtree.delete();
+                archivoBtree.createNewFile();
+                flujoBtree.close();
+                flujoBtree=new RandomAccessFile(archivoBtree, "rw");
+                ArrayList<Registro> registros;
+                registros=arbol.llaves();
+                System.out.println(registros);
+                flujoBtree.writeInt(registros.size());
+                for (int i = 0; i < registros.size(); i++) {
+                    flujoBtree.writeInt(registros.get(i).getKey());
+                    flujoBtree.writeLong(registros.get(i).getRRN());
+                }
+                flujoBtree.close();
                 flujo.close();
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
@@ -1048,6 +1110,24 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jm_exitsaveMouseClicked
 
     private void jm_registroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_registroActionPerformed
+        regsize=0;
+        for (int i = 0; i < tiposcampos.size(); i++) {
+            switch (tiposcampos.get(i)) {
+                case "String":
+                    regsize+=2;
+                    regsize+=sizecampos.get(i);
+                    break;
+                case "boolean":
+                    regsize++;
+                    break;
+                case "double":
+                    regsize+=8;
+                    break;
+                case "int":
+                    regsize+=4;
+                    break;
+            }
+        }
         String[] titulo = new String[campos.size()];
         for (int i = 0; i < campos.size(); i++) {
             titulo[i] = campos.get(i);
@@ -1147,12 +1227,60 @@ public class Principal extends javax.swing.JFrame {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             }
             r.setRRN(cantidadregistros+1);
-            arbol.insert(r);            
+            arbol.insert(r);        
+            Object[] linea= new String[camposregistro.size()];
             for (int i = 0; i < camposregistro.size(); i++) {
-                
+                linea[i]=camposregistro.get(i).toString();
+            }
+            DefaultTableModel modelo = (DefaultTableModel) jt_registros.getModel();
+            modelo.addRow(linea);
+            jt_registros.setModel(modelo);
+            if (cantidadregistros<1) {
+                try {
+                    flujo.seek(metainf);
+                    for (int i = 0; i < tiposcampos.size(); i++) {
+                        switch (tiposcampos.get(i)) {
+                            case "String":
+                                flujo.writeUTF((String)camposregistro.get(i));
+                                break;
+                            case "boolean":
+                                flujo.writeBoolean((Boolean)camposregistro.get(i));
+                                break;
+                            case "double":
+                                flujo.writeDouble((Double)camposregistro.get(i));
+                                break;
+                            case "int":
+                                flujo.writeInt((Integer)camposregistro.get(i));
+                                break;
+                        }
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }else{
+                try {
+                    flujo.seek(metainf+(cantidadregistros)*regsize);
+                    for (int i = 0; i < tiposcampos.size(); i++) {
+                        switch (tiposcampos.get(i)) {
+                            case "String":
+                                flujo.writeUTF((String)camposregistro.get(i));
+                                break;
+                            case "boolean":
+                                flujo.writeBoolean((Boolean)camposregistro.get(i));
+                                break;
+                            case "double":
+                                flujo.writeDouble((Double)camposregistro.get(i));
+                                break;
+                            case "int":
+                                flujo.writeInt((Integer)camposregistro.get(i));
+                                break;
+                        }
+                    }
+                } catch (Exception e) {
+                }
             }
         }else{
-        
+            System.out.println("Aun no se trabaja con avail "+avail);
         }
         
     }//GEN-LAST:event_jb_introducirregistroMouseClicked
@@ -1249,7 +1377,7 @@ public class Principal extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     private File archivo = null;
     private File archivoBtree = null;
-    private int avail = -1;
+    int avail = -1;
     private RandomAccessFile flujo = null;
     private RandomAccessFile flujoBtree = null;
     ArrayList<String> campos = new ArrayList();
@@ -1259,4 +1387,5 @@ public class Principal extends javax.swing.JFrame {
     long metainf = 500;
     long regsize;
     private BTree arbol;
+    int cantllaves=0;
 }

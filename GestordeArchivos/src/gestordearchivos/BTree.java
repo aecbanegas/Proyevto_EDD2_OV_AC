@@ -5,13 +5,14 @@
  */
 package gestordearchivos;
 
-import java.io.Serializable;
+import java.util.ArrayList;
+
 
 /**
  *
  * @author MBanegas
  */
-public class BTree implements Serializable {
+public class BTree{
 
     Bnode root; // Pointer to root node 
     int t = 3;  // Minimum degree
@@ -29,7 +30,32 @@ public class BTree implements Serializable {
             System.out.println("");
         }
     }
-
+    
+    ArrayList<Registro> llaves(){
+        ArrayList<Registro> regresa=new ArrayList();
+        AllKeys(regresa,root);
+        return regresa;
+    }
+    
+    void AllKeys(ArrayList<Registro> registros, Bnode nodo){
+        if (nodo.isLeaf()) {
+            for (int i = 0; i < nodo.getKeys().length; i++) {
+                if (nodo.getKeys()[i]!=null) {
+                    registros.add(nodo.getKeys()[i]);
+                }
+            }
+        }else{
+            for (int i = 0; i < nodo.getKeys().length; i++) {
+                if (nodo.getKeys()[i]!=null) {
+                    registros.add(nodo.getKeys()[i]);
+                }
+            }
+            for (int i = 0; i < nodo.getHijos().length; i++) {
+                AllKeys(registros,nodo.getHijos()[i]);
+            }
+        }
+    }
+    
     void PrintLevels() {
         try{
             if (root != null) {
