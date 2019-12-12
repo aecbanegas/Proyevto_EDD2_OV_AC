@@ -11,9 +11,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -21,11 +18,24 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
-import org.apache.poi.ss.usermodel.Cell;
+import java.util.Set;
+import java.util.TreeMap;
+import javax.swing.JOptionPane;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
+import org.apache.poi.ss.usermodel.Cell;
+import java.util.Map;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Text;
 /**
  *
  * @author MBanegas
@@ -74,9 +84,11 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jt_registros = new javax.swing.JTable();
         jd_Estandarizacion = new javax.swing.JDialog();
-        jLabel3 = new javax.swing.JLabel();
-        jButton11 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
+        jb_xlss = new javax.swing.JButton();
+        jb_xml = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jb_regresar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jb_cargararchivo = new javax.swing.JButton();
         jb_nuevoarchivo = new javax.swing.JButton();
@@ -276,6 +288,11 @@ public class Principal extends javax.swing.JFrame {
 
         jb_borrarregistro.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jb_borrarregistro.setText("Borrar Registro");
+        jb_borrarregistro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_borrarregistroMouseClicked(evt);
+            }
+        });
 
         jb_salirregistro.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jb_salirregistro.setText("Salir Registro");
@@ -355,19 +372,33 @@ public class Principal extends javax.swing.JFrame {
 
         jd_Estandarizacion.setSize(new java.awt.Dimension(700, 700));
 
-        jLabel3.setText("Estandarizacion");
-
-        jButton11.setText("Excel");
-        jButton11.addMouseListener(new java.awt.event.MouseAdapter() {
+        jb_xlss.setText("Excel");
+        jb_xlss.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton11MouseClicked(evt);
+                jb_xlssMouseClicked(evt);
             }
         });
 
-        jButton12.setText("XLM");
-        jButton12.addMouseListener(new java.awt.event.MouseAdapter() {
+        jb_xml.setText("XML");
+        jb_xml.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton12MouseClicked(evt);
+                jb_xmlMouseClicked(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("GESTOR DE BASES DE DATOS OVAC");
+
+        jLabel10.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 51, 51));
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setText("Menu Estandarización");
+
+        jb_regresar.setText("Regresar");
+        jb_regresar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_regresarMouseClicked(evt);
             }
         });
 
@@ -375,27 +406,36 @@ public class Principal extends javax.swing.JFrame {
         jd_Estandarizacion.getContentPane().setLayout(jd_EstandarizacionLayout);
         jd_EstandarizacionLayout.setHorizontalGroup(
             jd_EstandarizacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_EstandarizacionLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton11)
-                .addGap(239, 239, 239))
             .addGroup(jd_EstandarizacionLayout.createSequentialGroup()
-                .addGap(296, 296, 296)
                 .addGroup(jd_EstandarizacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton12)
-                    .addComponent(jLabel3))
-                .addContainerGap(315, Short.MAX_VALUE))
+                    .addGroup(jd_EstandarizacionLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jd_EstandarizacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jd_EstandarizacionLayout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(jb_xlss, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jb_xml, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jb_regresar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jd_EstandarizacionLayout.setVerticalGroup(
             jd_EstandarizacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jd_EstandarizacionLayout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addComponent(jLabel3)
-                .addGap(196, 196, 196)
-                .addComponent(jButton11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
-                .addComponent(jButton12)
-                .addGap(258, 258, 258))
+                .addContainerGap()
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37)
+                .addGroup(jd_EstandarizacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jb_xlss, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_xml, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_regresar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -472,6 +512,11 @@ public class Principal extends javax.swing.JFrame {
 
         jm_estandarizacion.setText("Estandarizacion");
         jm_estandarizacion.setEnabled(false);
+        jm_estandarizacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jm_estandarizacionActionPerformed(evt);
+            }
+        });
         jm_archivo.add(jm_estandarizacion);
 
         jMenuBar1.add(jm_archivo);
@@ -769,9 +814,6 @@ public class Principal extends javax.swing.JFrame {
 
                     } catch (Exception e) {
                         size = -1;
-                    }
-                    if (size == -1) {
-                        break;
                     }
                 }
                 llaveunica.add(false);
@@ -1365,33 +1407,211 @@ public class Principal extends javax.swing.JFrame {
                                 flujo.writeInt((Integer) camposregistro.get(i));
                                 break;
                         }
-                    }
+                    }                   
                 } catch (Exception e) {
                 }
             }
+            JOptionPane.showMessageDialog(jd_Registro, "Se ingreso registro satisfactoriamente!");
         } else {
-            System.out.println("Aun no se trabaja con avail " + avail);
+            int pos = 0;
+            for (int i = 0; i < llaveunica.size(); i++) {
+                if (llaveunica.get(i)) {
+                    pos = i;
+                    break;
+                }
+            }
+            Registro r = new Registro((int) camposregistro.get(pos));
+            r.setRRN(avail);
+            arbol.insert(r);
+            try {
+                flujo.seek(metainf+((avail-1)*regsize));
+                int newavail=flujo.readInt();
+                flujo.seek(metainf+((avail-1)*regsize));
+                for (int i = 0; i < tiposcampos.size(); i++) {
+                    switch (tiposcampos.get(i)) {
+                        case "String":
+                            flujo.writeUTF((String) camposregistro.get(i));
+                            break;
+                        case "boolean":
+                            flujo.writeBoolean((Boolean) camposregistro.get(i));
+                            break;
+                        case "double":
+                            flujo.writeDouble((Double) camposregistro.get(i));
+                            break;
+                        case "int":
+                            flujo.writeInt((Integer) camposregistro.get(i));
+                            break;
+                    }
+                }
+                avail=newavail;
+                } catch (Exception e) {
+                }
+                JOptionPane.showMessageDialog(jd_Registro, "Se ingreso registro satisfactoriamente!");
         }
 
     }//GEN-LAST:event_jb_introducirregistroMouseClicked
 
-    private void jButton12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton12MouseClicked
-
-    }//GEN-LAST:event_jButton12MouseClicked
-
-    private void jButton11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton11MouseClicked
-        if (archivo.exists()) {
-            DefaultTableModel modelo = (DefaultTableModel) jt_registros.getModel();
-            //modelo.addRow(linea);
-            
-            jt_registros.setModel(modelo);
-            Metadata metadata=new Metadata();
-            metadata.setCampos(campos);
-            metadata.setTipos(tiposcampos);
-            metadata.setSizeMeta((int)metainf);
-            ExportToExcel(metadata,archivo.getName(), jt_registros);
+    private void jb_xmlMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_xmlMouseClicked
+        ArrayList<Registro> registros=arbol.llaves();
+        String[] titulo = new String[campos.size()];
+        for (int i = 0; i < campos.size(); i++) {
+            titulo[i] = campos.get(i);
         }
-    }//GEN-LAST:event_jButton11MouseClicked
+        jt_registros.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                titulo
+        ));
+        DefaultTableModel modelo = (DefaultTableModel) jt_registros.getModel();
+        for (int h = 0; h < registros.size(); h++) {
+            Bnode nodo=arbol.search(registros.get(h));
+            if (nodo!=null) {
+                Object[] linea;
+                    for (int i = 0; i < nodo.getN(); i++) {
+                        linea = new String[campos.size()];
+                        if (nodo.getKeys()[i]!=null&&nodo.getKeys()[i].getKey()==registros.get(h).getKey()) {
+                            long rrn=nodo.getKeys()[i].getRRN();
+                            try {
+                                flujo.seek(metainf+((rrn-1)*regsize));
+                                for (int j = 0; j < campos.size(); j++) {
+                                    switch (tiposcampos.get(j)) {
+                                        case "String":
+                                            String momento=flujo.readUTF();
+                                            String aux="";
+                                            for (int k = 0; k < momento.length(); k++) {
+                                                if (!(momento.charAt(k)=='|')) {
+                                                    aux+=momento.charAt(k);
+                                                }
+                                            }
+                                            linea[j]=aux;
+                                            break;
+                                        case "boolean":
+                                            linea[j]=Boolean.toString(flujo.readBoolean());
+                                            break;
+                                        case "double":
+                                            linea[j]=Double.toString(flujo.readDouble());
+                                            break;
+                                        case "int":
+                                            int n=flujo.readInt();
+                                            linea[j]=Integer.toString(n);
+                                            break;
+                                    }
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            System.out.println(linea);
+                            modelo.addRow(linea);
+                        }                        
+                    }
+            }
+        }
+        System.out.println("Campos: "+campos);
+        System.out.println("Tipos Campos: "+tiposcampos);
+        System.out.println("Filas modelo: "+modelo.getRowCount());
+        jt_registros.setModel(modelo);
+        Metadata metadata=new Metadata();
+        metadata.setCampos(campos);
+        metadata.setTipos(tiposcampos);
+        metadata.setSizeMeta((int)metainf);
+        metadata.setNumregistros(modelo.getRowCount());        
+        try {
+            if (archivo == null || metadata == null || metadata.getCampos() == null || metadata.getNumregistros() == 0) {
+                JOptionPane.showMessageDialog(null, "No hay informacion cargada");
+            } else {
+                String name = JOptionPane.showInputDialog(null, "Ingrese el nombre del archivo a exportar: ");
+                ArrayList registrost = new ArrayList();
+
+                for (int i = 0; i < jt_registros.getRowCount(); i++) {
+                    ArrayList row = new ArrayList();
+                    for (int j = 0; j < jt_registros.getColumnCount(); j++) {
+                        row.add(jt_registros.getValueAt(i, j));
+                    }
+                    registrost.add(row);
+                }
+                exportXML(metadata.getCampos(), registrost, name);
+                JOptionPane.showMessageDialog(jd_Estandarizacion, "Se completo la exportacion.");
+            }
+
+        } catch (Exception e) {
+            System.out.println("Could not export successfully");
+        }
+    }//GEN-LAST:event_jb_xmlMouseClicked
+
+    private void jb_xlssMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_xlssMouseClicked
+        ArrayList<Registro> registros=arbol.llaves();
+        String[] titulo = new String[campos.size()];
+        for (int i = 0; i < campos.size(); i++) {
+            titulo[i] = campos.get(i);
+        }
+        jt_registros.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                titulo
+        ));
+        DefaultTableModel modelo = (DefaultTableModel) jt_registros.getModel();
+        for (int h = 0; h < registros.size(); h++) {
+            Bnode nodo=arbol.search(registros.get(h));
+            if (nodo!=null) {
+                Object[] linea;
+                    for (int i = 0; i < nodo.getN(); i++) {
+                        linea = new String[campos.size()];
+                        if (nodo.getKeys()[i]!=null&&nodo.getKeys()[i].getKey()==registros.get(h).getKey()) {
+                            long rrn=nodo.getKeys()[i].getRRN();
+                            try {
+                                flujo.seek(metainf+((rrn-1)*regsize));
+                                for (int j = 0; j < campos.size(); j++) {
+                                    switch (tiposcampos.get(j)) {
+                                        case "String":
+                                            String momento=flujo.readUTF();
+                                            String aux="";
+                                            for (int k = 0; k < momento.length(); k++) {
+                                                if (!(momento.charAt(k)=='|')) {
+                                                    aux+=momento.charAt(k);
+                                                }
+                                            }
+                                            linea[j]=aux;
+                                            break;
+                                        case "boolean":
+                                            linea[j]=Boolean.toString(flujo.readBoolean());
+                                            break;
+                                        case "double":
+                                            linea[j]=Double.toString(flujo.readDouble());
+                                            break;
+                                        case "int":
+                                            int n=flujo.readInt();
+                                            linea[j]=Integer.toString(n);
+                                            break;
+                                    }
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            System.out.println(linea);
+                            modelo.addRow(linea);
+                        }                        
+                    }
+            }
+        }
+        System.out.println("Campos: "+campos);
+        System.out.println("Tipos Campos: "+tiposcampos);
+        System.out.println("Filas modelo: "+modelo.getRowCount());
+        jt_registros.setModel(modelo);
+        Metadata metadata=new Metadata();
+        metadata.setCampos(campos);
+        metadata.setTipos(tiposcampos);
+        metadata.setSizeMeta((int)metainf);
+        metadata.setNumregistros(modelo.getRowCount());        
+        try {
+            if (archivo == null || metadata == null || metadata.getCampos() == null || metadata.getNumregistros() == 0) {
+                JOptionPane.showMessageDialog(null, "No hay informacion cargada");
+            } else {
+                String name = JOptionPane.showInputDialog(null, "Ingrese el nombre del archivo a exportar: ");
+                ExportToExcel(metadata, name, jt_registros);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error Fatal.");
+        }              
+    }//GEN-LAST:event_jb_xlssMouseClicked
 
     private void jblistarregistroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblistarregistroMouseClicked
         // TODO add your handling code here:
@@ -1714,10 +1934,86 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jb_modificarregistroMouseClicked
 
-    public void ExportToExcel(Metadata metadata, String name, JTable table) {   
-        //Blank workbook
-        XSSFWorkbook workbook = new XSSFWorkbook();
+    private void jb_borrarregistroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_borrarregistroMouseClicked
+        // TODO add your handling code here:
+        String[] titulo = new String[campos.size()];
+        for (int i = 0; i < campos.size(); i++) {
+            titulo[i] = campos.get(i);
+        }
+        jt_registros.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                titulo
+        ));
+        boolean flag=true;
+        int PrimeKey=0;
+        while(flag){
+             try {
+                PrimeKey=Integer.parseInt(JOptionPane.showInputDialog("Ingrese la llave primaria del registro que desea eliminar: "));
+                Registro r=new Registro(PrimeKey);
+                Bnode nodo=arbol.search(r);
+                if (nodo!=null) {
+                    for (int i = 0; i < nodo.getN(); i++) {                        
+                        if (nodo.getKeys()[i]!=null&&nodo.getKeys()[i].getKey()==r.getKey()) {
+                            long rrn=nodo.getKeys()[i].getRRN();
+                            try {
+                                flujo.seek(metainf+((rrn-1)*regsize));
+                                flujo.writeInt(avail);
+                                avail=Integer.parseInt(Long.toString(rrn));                                
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }                            
+                        }                        
+                    }
+                    arbol.remove(r);
+                    flag=false;          
+                    JOptionPane.showMessageDialog(jd_Registro, "Se ha eliminado el registro!");
+                }else{
+                    flag=false;
+                    JOptionPane.showMessageDialog(jd_Registro, "No existe el registro a eliminar! Intente de nuevo!");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_jb_borrarregistroMouseClicked
 
+    private void jm_estandarizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_estandarizacionActionPerformed
+        // TODO add your handling code here:
+        regsize = 0;
+        for (int i = 0; i < tiposcampos.size(); i++) {
+            switch (tiposcampos.get(i)) {
+                case "String":
+                    regsize += 2;
+                    regsize += sizecampos.get(i);
+                    break;
+                case "boolean":
+                    regsize++;
+                    break;
+                case "double":
+                    regsize += 8;
+                    break;
+                case "int":
+                    regsize += 4;
+                    break;
+            }
+        }
+        jd_Estandarizacion.setModal(true);
+        jd_Estandarizacion.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        jd_Estandarizacion.pack();
+        jd_Estandarizacion.setLocationRelativeTo(this);
+        jd_Estandarizacion.setVisible(true);
+    }//GEN-LAST:event_jm_estandarizacionActionPerformed
+
+    private void jb_regresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_regresarMouseClicked
+        // TODO add your handling code here:
+        jd_Estandarizacion.dispose();
+    }//GEN-LAST:event_jb_regresarMouseClicked
+
+    public void ExportToExcel(Metadata metadata, String name, JTable table) {
+        //Blank workbook
+        System.out.println("Antes de workbook");
+        XSSFWorkbook workbook=new XSSFWorkbook();
+        System.out.println("Despues de workbook");
         //Create a blank sheet
         XSSFSheet sheet = workbook.createSheet("Estructura de Datos");
         int registros = table.getModel().getRowCount();
@@ -1766,6 +2062,53 @@ public class Principal extends javax.swing.JFrame {
             System.out.println(name + " written successfully on disk.");
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+    
+    public static void exportXML(ArrayList Campos, ArrayList Regs, String Direccion) {
+        Document document = null;
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        try {
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            DOMImplementation implementation = builder.getDOMImplementation();
+            document = implementation.createDocument(null, "xml", null);
+            //Arraylist de campos
+
+            for (int i = 0; i < Regs.size(); i++) {
+                Element registro = document.createElement("Registro" + i);
+                document.getDocumentElement().appendChild(registro);
+                ArrayList<Element> elementos = new ArrayList();
+
+                for (int j = 0; j < Campos.size(); j++) { //Llenando arraylist de elementos campos
+                    Element campos = document.createElement(Campos.get(j).toString());
+                    elementos.add(campos);
+                }
+
+                for (int h = 0; h < elementos.size(); h++) {
+                    registro.appendChild(elementos.get(h));
+                    Text valorCampo = document.createTextNode(Regs.get(h).toString());
+                    elementos.get(h).appendChild(valorCampo);
+                    document.setXmlVersion("1.0");
+
+                }
+            }
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+
+            // Archivo donde almacenaremos el XML
+            File archivo = new File(Direccion + ".xml");
+
+            // Fuente de datos, en este caso el documento XML
+            DOMSource source = new DOMSource(document);
+            // Resultado, el cual almacena en el archivo indicado
+            StreamResult result = new StreamResult(archivo);
+            // Transformamos de ña fuente DOM a el resultado, lo que almacena todo en el archivo
+            transformer.transform(source, result);
+            //System.out.println("Ended");
+        } catch (Exception e) {
+            // Logger.getLogger(TreeTest2.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("COULD NOT EXPORT PROBABLY DIRTY EXPORTER STRING.");
+
         }
     }
     
@@ -1818,12 +2161,11 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu3;
@@ -1844,8 +2186,11 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton jb_modificarcampo;
     private javax.swing.JButton jb_modificarregistro;
     private javax.swing.JButton jb_nuevoarchivo;
+    private javax.swing.JButton jb_regresar;
     private javax.swing.JButton jb_regresarcampos;
     private javax.swing.JButton jb_salirregistro;
+    private javax.swing.JButton jb_xlss;
+    private javax.swing.JButton jb_xml;
     private javax.swing.JButton jblistarregistro;
     private javax.swing.JDialog jd_Campos;
     private javax.swing.JDialog jd_Estandarizacion;
